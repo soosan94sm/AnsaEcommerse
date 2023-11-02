@@ -1,0 +1,89 @@
+
+<%- include('./header')-%>
+<%- include('./nav')-%>
+
+  <nav
+  id="main-navbar"
+  class="navbar navbar-expand-lg navbar-light bg-white fixed-top"style="padding:0"
+  >
+  
+<!-- Container wrapper -->
+<div class="container-fluid">
+ <!-- Toggle button -->
+ <button
+         class="navbar-toggler"
+         type="button"
+         data-mdb-toggle="collapse"
+         data-mdb-target="#sidebarMenu"
+         aria-controls="sidebarMenu"
+         aria-expanded="false"
+         aria-label="Toggle navigation"
+         >
+   <i class="fas fa-bars"></i>
+ </button>
+
+ 
+
+</nav>
+ 
+
+
+<main style="margin-top: 10px;margin-right:-250px">
+  <div class="container">
+    <% if(locals.users) {%>
+      <section class="container ">
+          <div class="row ">
+
+            
+              <%if(users.length===0){%>
+              <div class="col-md-6">
+                  <strong class="textColorYellow">No user exists </strong>
+              </div>
+              <% }else{ %>
+              <div class="row">
+                  <div class="col-md-12 p-lg-5 ml-5">
+                    <div class="col-md-6 py-4">
+                        <h2> <strong class="textColorYellow ">User List </strong></h2>
+                     </div>
+                      <table class="table table-bordered table-hover table-striped text-center mt-2">
+                          <thead style="background-color: #FAF3EA;">
+                              <tr>
+                                  <th>Name</th>
+                                  <th>Email</th>
+                                  <th>Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <% users.forEach(user=>{  %>
+                              <tr>
+                                  <td><%= user.name %></td>
+                                  <td><%= user.email %></td>
+                                  <td>
+                                      <% if(user.isBlocked){ %>
+                                          <a href="/admin/user/unblock?id=<%= user._id %>" class="btn btn-golden-outline">
+                                          Unblock
+                                      </a>
+                                      <% }else{ %>
+                                          <a href="/admin/user/block?id=<%= user._id %>" class="btn btn-golden-bg">
+                                              block
+                                          </a>
+                                          <% } %>
+                                  </td>
+                              </tr>
+                              <% }) %>
+                          </tbody>
+                      </table>
+
+                  </div>
+              </div>
+              <% } %>
+          </div>
+      </section>
+       <%}%>
+  </div>
+</main>
+
+ 
+
+
+<% include('./footer')%>

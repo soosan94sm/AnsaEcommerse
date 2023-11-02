@@ -1,0 +1,226 @@
+<%- include('../header')-%>
+
+    <%- include('./partials/banner')-%>
+
+
+        <main class="main ">
+            
+            <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0 ">
+                <div class="container d-flex align-items-center mt-7 pt-4">
+                    <div class="row mt-3 " >
+                        <div class="col-md-6 " >
+                            <div class="product-gallery product-gallery-vertical">
+
+                                <div class="row ">
+                                    
+                                    <% product.forEach(item=>{%>
+                                    <figure class="product-main-image" id="product">
+                                        <img id="product-zoom" src="/admin/assets/uploads/<%=item.images[0]%>"
+                                            data-zoom-image="assets/images/products/single/1-big.jpg"
+                                            alt="<%=item.images[0]%>" />
+
+
+                                        <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                            <i class="icon-arrows"></i>
+                                        </a>
+                                    </figure>
+                                    <%})%>
+
+                                    <!-- End .product-main-image -->
+                                   
+                                    <div id="product-zoom-gallery" class="product-image-gallery ">
+                                        <% product.forEach(item=>{%>
+                                            <%item.images.forEach(images=>{%>
+                                            <div class="product-gallery-item active" href="#"
+                                                data-image="assets/images/products/single/1.jpg"
+                                                data-zoom-image="assets/images/products/single/1-big.jpg"
+                                                onclick="displayAsMainImage('<%=images%>')">
+                                                <img src="/admin/assets/uploads/<%=images%>" alt="product side">
+                                            </div>
+                                            <%})%>
+                                            <%})%>
+
+                                              
+
+                                    </div>
+                                 
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6" >
+                            <% product.forEach(item=>{%>
+                            <div class="product-details">
+                                <h1 class="product-title text-capitalize">
+                                    <%=item.productName%>
+                                </h1><!-- End .product-title -->
+
+                                
+
+                                <div class="product-price">
+                                    &#8377 <%= item.price%>
+                                </div><!-- End .product-price -->
+
+                                <div class="product-content">
+                                    <p>
+                                        <%=item.description%>
+                                    </p>
+                                </div><!-- End .product-content -->
+                              
+                                <!-- <div class="details-filter-row details-row-size">
+                                    <label>Color:</label>
+
+                                    <div class="product-nav product-nav-thumbs">
+                                        <a href="#" class="active">
+                                            <img src="assets/images/products/single/1-thumb.jpg" alt="product desc">
+                                        </a>
+                                        <a href="#">
+                                            <img src="assets/images/products/single/2-thumb.jpg" alt="product desc">
+                                        </a>
+                                    </div><-- End .product-nav -->
+                                <!-- </div>End .details-filter-row --> 
+
+                                <!-- <div class="details-filter-row details-row-size">
+                                    <label for="size">Size:</label>
+                                    <div class="select-custom">
+                                        <select name="size" id="size" class="form-control">
+                                            <option value="#" selected="selected">Select a size</option>
+                                            <option value="s">Small</option>
+                                            <option value="m">Medium</option>
+                                            <option value="l">Large</option>
+                                            <option value="xl">Extra Large</option>
+                                        </select>
+                                    </div><-- End .select-custom -->
+
+                                    <!-- <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
+                                </div>End .details-filter-row --> 
+
+                                <!-- <div class="details-filter-row details-row-size">
+                                    <label for="qty">Qty:</label>
+                                    <div class="product-details-quantity">
+                                        <input type="number" id="qty" class="form-control" value="1" min="1"
+                                            max="10" step="1" data-decimals="0" required>
+                                    </div>< End .product-details-quantity -->
+                                <!-- </div> -->
+
+                                <div class="product-details-action">
+                                    <a href="" onclick="showCart('<%=item._id%>')"class="btn-product btn-cart"><span>add to
+                                            cart</span></a>
+
+                                   
+                                <!-- </div>End .product-details-footer -->
+                            </div><!-- End .product-details -->
+                            <%})%>
+                            <a href="/cart" class="btn btn-outline-primary-2 btn-lg btn-block col-md-4 mx-auto check" type="submit">View cart</a>
+                        </div>
+                     
+                    </div>
+                </div>
+                <!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+                    <div class="product-details-top">
+                        <div class="row d-flex">
+                            <div class="col-md-6">
+                                <div class="product-gallery product-gallery-vertical">
+
+                                </div><!-- End .product-gallery -->
+                            </div><!-- End .col-md-6 -->
+
+                            <div class="col-md-6">
+
+                            </div><!-- End .col-md-6 -->
+
+                        </div><!-- End .row -->
+                    </div><!-- End .product-details-top -->
+
+                    <div class="product-details-tab">
+                     
+
+                        
+
+
+                                </div><!-- End .product-desc-content -->
+                            </div><!-- .End .tab-pane -->
+                            <div class="tab-pane fade" id="product-info-tab" role="tabpanel"
+                                aria-labelledby="product-info-link">
+                                
+                            </div><!-- .End .tab-pane -->
+                            <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
+                                aria-labelledby="product-shipping-link">
+                                <div class="product-desc-content">
+
+                                </div><!-- End .product-desc-content -->
+                            </div><!-- .End .tab-pane -->
+                           
+                            </div><!-- .End .tab-pane -->
+                        </div><!-- End .tab-content -->
+                    </div>
+                </div>
+            </div>
+            </div><!-- End .product-details-tab -->
+           
+        </main>
+        <script src="path/to/jquery.min.js"></script>
+        <script src="path/to/jquery.elevatezoom.js"></script>
+        
+
+        <script>
+            async function showCart(productId) {
+    try {
+       
+        console.log(productId,"hello......");
+        const response = await fetch("/api/add-to-cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ productId}), // Send the product ID in the request body
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log(responseData.message);
+            updateCartUI(responseData.cartCount);
+            // alert('Add to Cart')
+        } else {
+            console.error("Failed to add product to cart");
+        }
+    } catch (error) {
+        console.error("Error adding to cart:", error);
+    }
+}
+
+function updateCartUI(cartCount) {
+    // Update UI to display cart count
+    document.querySelector(".cart-icon").textContent = cartCount;
+}
+
+$(document).ready(function () {
+    $('#product-zoom').elevateZoom({
+      gallery: 'product-zoom-gallery',
+      cursor: 'pointer',
+      galleryActiveClass: 'active',
+      zoomType: 'inner',
+      responsive: true
+    });
+  });
+  function displayAsMainImage(image) {
+
+const imageDiv = document.getElementById("product-zoom");
+imageDiv.src = `/admin/assets/uploads/${image}`;
+
+}
+
+
+        </script>
+
+
+
+        
+        
+          
+
+        <%- include('../footer')-%>

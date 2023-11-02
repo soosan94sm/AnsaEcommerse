@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/admin/assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="/admin/assets/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="/admin/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="/admin/assets/css/style.css">
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="/admin/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <%- include('./nav')%>
+<div class="container mt-5">
+    <h1>Order Details</h1>
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>Order Information</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Address:</strong> <%= orderDetails[0].address %></p>
+            <p><strong>Name:</strong> <%= orderDetails[0].name %></p>
+            <p><strong>Order Status:</strong> <%= orderDetails[0].orderStatus %></p>
+            <p><strong>Total Amount:</strong> <%= orderDetails[0].totalAmount %></p>
+            <p><strong>Purchase Date:</strong> <%= orderDetails[0].purchaseDate.toLocaleDateString() %></p>
+            <p><strong>Delivery Date:</strong> <%= orderDetails[0].deliveryDate  %></p>
+            <p><strong>Payment Method:</strong> <%= orderDetails[0].paymentMethod %></p>
+        </div>
+    </div>
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>Order Items</h2>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <% for (let i = 1; i < orderDetails.length; i++) { %>
+                    <li >
+                        <strong>Product Name:</strong> <%= orderDetails[i].productName %>,
+                        <strong>Quantity:</strong> <%= orderDetails[i].quantity %>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

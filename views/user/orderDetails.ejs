@@ -1,0 +1,61 @@
+<%- include('../header.ejs') -%>
+<%- include('./partials/banner.ejs') -%>
+
+<!-- breadcrumb -->
+<div class="container" style="margin-top: 3rem;">
+  <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+    <a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+      Home
+      <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Product Detail -->
+
+
+<div style="margin-top: 20rem ;margin-left: 5rem;">
+  <% product.map((productItem) => { %>
+    <%= productItem.product.productName %>
+    <img src="/admin/assets/uploads/<%= productItem.product.images[0] %>" width="280" alt="IMG-PRODUCT">
+    <!-- Rs. <%= order.total|| 'Price not available' %> -->
+
+<%let quantity=productItem.quantity%>
+
+<%let price=productItem.product.price%>
+<%let total=quantity*price%>
+Rs. <%= total|| 'Price not available' %>
+<%=productItem.orderStatus%>
+<%if(productItem.orderStatus !=='delivered' && productItem.orderStatus !=="cancel"){%>
+  <a href="/cancel?id=<%=productItem.product._id%>&orderId=<%=productItem.order.orderId%>" class="btn btn-danger btn-sm">Cancel this delivery</a>
+  <%} else if (productItem.orderStatus === "cancel"){%>
+    <button class="btn btn-secondary btn-sm" disabled> Cancelled</button> 
+   <%}else{%>
+    <a href="/return?id=<%=productItem.product._id%>&orderId=<%=productItem.order.orderId%>"class="btn btn-success btn-sm return">Return Item</a>
+    
+    <%}%>
+    <%})%>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  // Add JavaScript code here to handle filter application and order history display
+  document.getElementById('applyFilters').addEventListener('click', function() {
+      const statusFilter = document.getElementById('statusFilter').value;
+      const dateFilter = document.getElementById('dateFilter').value;
+     
+      
+      
+  });
+  const returnCancel = document.getElementById('return')
+  returnCancel.addEventListener('click',()=>{
+      console.log("clickrd");
+  })
+
+  });
+</script>
+ 
+
+
+
+<%- include('../footer.ejs') -%>

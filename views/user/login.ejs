@@ -1,0 +1,167 @@
+<%- include('../header')-%>
+
+
+
+
+            <div class=" bg-image " style="background-image: url('admin/assets/uploads/models-model-black-hair-girl-indian-hd-wallpaper-preview.jpg')">
+           
+    <header class="header header-9">
+      <div class="header-middle sticky-header">
+          <div class="container-fluid bg-dark ">
+              <div class="header-left">
+                  <button class="mobile-menu-toggler">
+                      <span class="sr-only">Toggle mobile menu</span>
+                      <i class="icon-bars"></i>
+                  </button>
+                  
+                  <a href="/" class="logo">
+                      <h1 style="text-size-adjust: 100px;color: bisque;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">ANSA</h1>
+                  </a>
+              </div><!-- End .header-left -->
+
+              <div class="header-right">
+                  <nav class="main-nav">
+                      <ul class="menu sf-arrows">
+                          <li >
+                              <a href="/" >Home</a>
+
+                          </li>
+                          
+                          <li>
+                              <a href="/product" >Shop</a>
+
+                          </li>
+                        
+                         
+                     
+                           <!-- <li>
+                              <a href="/contact" >Contact</a>
+
+                              <ul>
+                                  <li><a href="blog.html">Classic</a></li> -->
+                                  
+                                          
+                                  <li >
+                                      <a href="/profile">Profile</a>
+              
+                                     
+                                  </li>      
+                                          
+                                     
+                                
+                                   
+                          
+                      </ul><!-- End .menu -->
+                  </nav><!-- End .main-nav -->
+              </div><!-- End .header-right -->
+                  <div class="header-search">
+                      <a href="" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                      <form action="/search" method="post">
+                         
+                         <!-- <button style="width: 10px;">search</button> -->
+                          <div class="header-search-wrapper">
+                              <button  class="sr-only">Search</button>
+                              <input type="search" class="form-control" name="search" id="search" placeholder="Search in..." required>
+                          </div><!-- End .header-search-wrapper -->
+                          
+                      </form>
+                      
+                  </div><!-- End .header-search -->
+                  
+                  <!-- <a href="wishlist" class="wishlist-link">
+                      <i class="icon-heart-o"></i>
+                      <span class="wishlist-count">3</span>
+                  </a> -->
+
+                  <div class="dropdown cart-dropdown">
+                      <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                          <i class="icon-shopping-cart"></i>
+                          
+                      </a>
+
+                      <div class="dropdown-menu dropdown-menu-right">
+                          
+
+                          
+                          <div class="dropdown-cart-action">
+                              <a href="cart" class="btn btn-primary">View Cart</a>
+                              <a href="checkout" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                          </div><!-- End .dropdown-cart-total -->
+                      </div><!-- End .dropdown-menu -->
+                  </div><!-- End .cart-dropdown -->
+                  <div> 
+                     
+                        
+                        
+                        
+                          <a class="text-white ml-3 font-weight-bold" href="/login">Login</a>
+                     
+                   
+                        
+                         
+                   
+                      </div>   
+             
+       </div><!-- End .container -->
+      </div><!-- End .header-middle -->
+  </header><!-- End .header -->
+
+
+				<div class="container login-pagept-0 pb-8 pt-md-5 pb-md-10 pt-lg-15 pb-lg-15">
+         
+            		<div class="form-box">
+            			<div class="form-tab">
+	            			<h3 class="text-center">Login</h3>
+							<div class="tab-content">
+								<div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
+							    	<form action="" method="post" class="pt-3"href="/home" >
+                                        <% if(locals.message) { %>
+                                        <div>
+                                          <p class="text-danger"><%= message %> </p>
+                                        </div>
+                                        <% } %>
+                          
+                                    
+                                       
+                                        <div class="form-group">
+                                          <input type="email" id="email-error" class="form-control" placeholder="Email" name="email" required><br>
+                                        </div>
+                                       
+                                        <div class="form-group">
+                                          <input type="password" id="password-error" class="form-control" name="password" placeholder="Password"  required><br>
+                                        </div>
+                                       
+                                        
+                                          <div class="form-group">
+                                           
+                                            
+											<button class="btn btn-outline-primary text-capitalize">Log In</button><br> 
+										</div>
+                    <a href="/otpValidation"class="text-capitalize btn btn-light  text-primary">Login with Otp</a><br>
+										 
+                    <div class="form-group d-flex align-items-center justify-content-between">
+                                         
+                                            <a class="btn-primary text-left" href="/signup">SignUp</a><br>
+                                           <a href="/forgotpassword" class="forgot-pass btn btn-primary mr-5">Forgot password</a>
+</div>
+                                      </form>
+							    	
+							    </div><!-- .End .tab-pane -->
+							   
+							    </div>
+							</div><!-- End .tab-content -->
+						</div><!-- End .form-tab -->
+            		</div><!-- End .form-box -->
+            	</div><!-- End .container -->
+            </div><!-- End .login-page section-bg -->
+        </main><!-- End .main -->
+
+        
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    
+    <%- include('../footer')-%>   

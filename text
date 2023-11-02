@@ -1,0 +1,675 @@
+ <!-- <div style="flex: 1;">
+                  <select name="category" class="form-select mr-5" aria-label="Default select example">
+                    <option selected>Select the category</option>
+                    <% category.forEach(function(cat) { %>
+                      <option name="<%= cat.categoryName %>"  value="<%= cat.categoryName %>"><%= cat.categoryName %></option>
+                    <% }); %>
+                  </select>
+                </div> -->
+
+                <hr class="mx-n3">
+
+                <div class="row align-items-center py-3">
+                  <div class="col-md-3 ps-5">
+                    
+                    <h6 class="mb-0">Product Images</h6>
+    
+                    <!-- <div class="thumbnail text-center" style="width: 600px; display: flex; justify-content: space-around;" >
+                      <% var images = product.images; %>
+                      <% for (var i=0;i< images.length;i++) { %>
+                        <div style="width: 100px; height: 200px;">
+                        <img src="/admin/assets/uploads/<%= images[i] %>" width="50"  style="box-shadow: rgba(67, 65, 65, 0.2) 0px 2px 8px 0px; margin-left: 10px;">
+                        <!-- <a href="/admin/products/deleteimage?productImages=<%=images[i]%>" class="btn btn-outline-danger" style="margin-top: 10px;"><i class="fa fa-remove" style="font-size:15px"></i></a> -->
+  
+                      </div>
+                      <% } %>
+                    </div> -->
+                  </div>
+  /////////////////////////////////////////////////////////////////////////////////////////////////
+  const mongoose = require('mongoose')
+const db = require('../config/db')
+const orderSchema = new mongoose.Schema({
+    orderId : {
+        type : String,
+        required : true
+    },
+    user:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+        
+    },
+    orderItem : {
+        type : [
+            {
+                product_id: mongoose.Schema.Types.ObjectId,
+                quantity: Number,
+                orderStatus : {
+                    type : String,
+                    default : "pending"},
+                orderConfirm:{
+                        type:Boolean,
+                        default:false
+                    },
+                orderCancelReason:{
+                        type:String
+                    },
+                orderReturnRequest: {
+                        type: Boolean,
+                        default: false
+                    },
+                    orderCancleRequest:{
+                        type:Boolean,
+                        default:false
+                    },
+                    orderReturnReason:{
+                        type:String
+                    }
+
+                
+            }
+        ],
+        //required : true
+    },
+    
+    totalAmount : {
+        type : Number,
+    },
+    purchaseDate : {
+        type : Date,
+        default : new Date()
+    },
+    deliveryDate : {
+        type : Date,
+        default : null
+    },
+    paymentMethod :{
+        type : String,
+    },
+    address:{
+        type:String,
+    }
+})
+
+const Order = db.model("Order",orderSchema);
+
+module.exports = Order;
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+<%- include('./header')-%>
+<%- include('./nav')-%>
+
+
+<% if (locals.message) { %>
+    <div class="alert alert-danger">
+        <strong><%= message %> </strong>
+    </div>
+<% } %>
+
+<!-- Rest of your HTML and form elements -->
+<div class="container mt-5">
+  <div class="row">
+      <div class="col-12">
+          <h2 class="mb-5 text-center" >ORDERS</h2>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-12">
+          <div class="table-responsive ">
+              <table class="table table-bordered table-hover table-striped mt-2 ">
+                  <thead class="thead-dark">
+                      <tr>
+                          
+              <th scope="col">OrderID</th>
+              <th scope="col">Client Name</th>
+
+              <th scope="col">Product Id</th>
+              <th scope="col">Payment Method</th>
+              <th scope="col">Order date</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+                      </tr>
+                  </thead>
+                  <tbody id="filteredResults">
+          <% if (locals.items) { %>
+              <% items.forEach(item => { %>
+                  <% item.orderItem.forEach(orderItem => { %>
+                      <tr class="word-wrap">
+                          <td class="word-wrap orderId"><%= item.orderId %></td>
+                          <td class="text-capitalize username"><a href="/admin/order/admindetails?id=<%= item.orderId %>"><%= item.user.name %></a> </td>
+                         
+                              
+                          <td class="text-left"> <%= orderItem.product_id %></td>
+                          <td><%= item.paymentMethod %></td>
+                          <td><%= item.purchaseDate.toLocaleDateString() %></td>
+                         
+                           
+                            </td>
+                            <td >
+                             
+                              
+        <select class="form-select" style="border-radius: 20px;" aria-label=".form-select-sm example" name="salesRe" id="orderr"onchange="conform()">
+          <option selected>Order status</option>
+          <option value="<%= item.orderConfirm %>" data-product-id="<%= orderItem.product_id %>" data-order-id="<%= item.orderId %>">order Confirm</option>
+  <option value="<%= item.orderCancelReason %>" data-product-id="<%= orderItem.product_id %>" data-order-id="<%= item.orderId %>">cancel confirm</option>
+  <option value="<%= item.orderReturnReason %>" data-product-id="<%= orderItem.product_id %>" data-order-id="<%= item.orderId %>">Return confirm</option>
+  
+       
+</select>
+      
+                            </td>
+                      </tr>
+                  <% }); %>
+              <% }); %>
+          <% } else { %> 
+                          <tr>
+                              <td colspan="6">No orders</td>
+                          </tr>
+                      <% } %>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
+    <div class="align-items-center">
+      <nav aria-label="Page navigation example" style="width: 30%; margin: auto;">
+        <p class="text-center">Page <%= currentPage %> of <%= totalPages %></p>
+        <ul class="pagination justify-content-center">
+            <% if (currentPage > 1) { %>
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<%= currentPage - 1 %>">Previous</a>
+                </li>
+            <% } %>
+            <% if (currentPage < totalPages) { %>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<%= currentPage + 1 %>">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<%= totalPages %>">Last</a>
+                </li>
+            <% } %>
+        </ul>
+    </nav>
+    
+</div> 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script id="ord" type="application/json"><%- JSON.stringify(items) %></script>
+
+  
+<script>
+  let orderDetails = document.getElementById('ord')
+  console.log(orderDetails);
+  let orderss = JSON.parse(orderDetails.textContent)
+console.log("hi",orderss);
+
+function conform() {
+  // find order id 
+  // find orderid --> productid 
+  // p
+  var selectElement = document.getElementById("orderr");
+  var selectedOption = selectElement.options[selectElement.selectedIndex];
+  var orderId = selectedOption.getAttribute("data-order-id");
+  var productId = selectedOption.getAttribute("data-product-id");
+
+  // Do something with productId and orderId
+  console.log("Selected Product ID: " + productId);
+  console.log("Selected Order ID: " + orderId);
+
+  fetch('/conformOrder', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ orderId: orderId, product_id: productId }), 
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Fetch error:', error);
+  });
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+document.querySelectorAll('.update').forEach(button => {
+  button.addEventListener('click', function() {
+    // Get the selected value
+    let orderId = this.getAttribute('data-orderid');
+    
+    console.log(orderId);
+   
+    // You can now use the selectedValue in your script as needed.
+    // For example, you can use it to perform some action or make an AJAX request.
+    $.ajax({
+  method: 'POST',
+  url: '/admin/orderUpdate',
+  data: { orderId: orderId },
+  success: function(response) {
+    console.log("AJAX POST request to /test-post was successful!");
+    console.log("Response:", response);
+    
+    const progressBar = document.querySelector(`.progress-bar[data-orderid="${orderId}"]`);
+    const btnUpdate = document.getElementById('btnUpdate')
+    
+    // console.log(btnUpdate.innerHTML);
+    
+    let processingPercentage = 0; // Initialize progress
+    let backgroundColor = ''; // Initialize background color
+    
+    if (response.status === "processing") {
+      processingPercentage = 50; // Processing status, set progress to 50%
+      backgroundColor = 'blue'; // Change color to blue
+      btnUpdate.innerHTML=response.status
+      alert("processing")
+
+    } else if (response.status === "delivered") {
+      processingPercentage = 100; // Delivered status, set progress to 100%
+      backgroundColor = 'green'; // Change color to green
+      btnUpdate.innerHTML=response.status
+      alert("delivered")
+
+    }
+
+    // Update progress bar
+    progressBar.style.width = processingPercentage + "%";
+    progressBar.setAttribute('aria-valuenow', processingPercentage);
+    progressBar.style.backgroundColor = backgroundColor;
+  },
+      error: function(error) {
+        console.error("AJAX POST request to /test-post failed:", error);
+      }
+    });
+  });
+});
+document.querySelectorAll('.cancel').forEach(button => {
+  button.addEventListener('click', function() {
+    // Get the selected order ID
+    let orderId = this.getAttribute('data-orderid');
+    
+    console.log("Cancel button clicked for order ID:", orderId);
+
+    // Here you can perform the cancel action, like making an AJAX request.
+    // For example:
+    $.ajax({
+      method: 'POST',
+      url: '/admin/cancelOrder',
+      data: { orderId: orderId },
+      success: function(response) {
+        console.log("Order canceled successfully!", response);
+
+        // Update UI or take further actions for all progress bars
+        document.querySelectorAll(`.progress-bar[data-orderid="${orderId}"]`).forEach(progressBar => {
+          let processingPercentage = 0; // Initialize progress
+          let backgroundColor = ''; // Initialize background color
+
+          if (response.status === "cancel") {
+            processingPercentage = 100; // Processing status, set progress to 100%
+            backgroundColor = 'red'; // Change color to red
+          }
+          
+
+          progressBar.style.width = processingPercentage + "%";
+            progressBar.setAttribute('aria-valuenow', processingPercentage);
+            progressBar.style.backgroundColor = backgroundColor;
+          alert(response.message)
+            // Disable the cancel button when status is "delivered"
+            if (response.status === "delivered") {
+              const cancelButtons = document.querySelectorAll(`.cancel[data-orderid="${orderId}"]`);
+              cancelButtons.forEach(cancelButton => {
+                cancelButton.disabled = true;
+              });
+            }
+          });
+      },
+      error: function(error) {
+        console.error("Failed to cancel order:", error);
+      }
+    });
+  });
+});
+});
+
+</script>
+
+
+</body>
+</html>
+/////////////////////////////////////////////////////////////admin controller
+
+module.exports.getOrderList=async(req,res)=>{
+  try{
+    const pipeline = [
+      {
+        $lookup: {
+          from: 'users', // Replace with your actual collection name for users
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: '$user'
+      },
+      {
+        $unwind: '$orderItem'
+      },
+      {
+        $lookup: {
+          from: 'products', // Replace with the actual collection name for products
+          localField: 'orderItem.product_id',
+          foreignField: '_id',
+          as: 'orderItem.product'
+        }
+      },
+      {
+        $group: {
+          _id: '$orderId', // Group by orderId to eliminate duplicates
+          user: { $first: '$user' },
+          orderId: { $first: '$orderId' },
+          orderItem: { $push: '$orderItem' }, // Keep the original orderItems array
+          totalAmount: { $first: '$totalAmount' },
+          purchaseDate: { $first: '$purchaseDate' },
+          deliveryDate: { $first: '$deliveryDate' },
+          paymentMethod: { $first: '$paymentMethod' }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          user: 1,
+          orderId: 1,
+          orderItem: 1,
+          totalAmount: 1,
+          purchaseDate: 1,
+          deliveryDate: 1,
+          paymentMethod: 1
+        }
+      }
+    ];
+    
+    const orderLists = await Order.aggregate(pipeline);
+    
+    
+    console.log("-----------");
+     console.log(orderLists,"-----------------");
+    
+    
+    
+  
+  
+      const itemsPerPage = 6;
+      const totalItems = orderLists.length;
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+      const currentPage = req.query.page ? parseInt(req.query.page) : 1;
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const itemsToShow = orderLists.slice(startIndex, endIndex);
+  
+      const innerArrays = itemsToShow.map(item => item.orderItem);
+      const item=itemsToShow.map(item=>item)
+      console.log("Inner arrays:", innerArrays.length, '$$$',item.length);
+    console.log("inneraray",innerArrays);
+
+    console.log("itemsToShow............",itemsToShow)
+      res.render('orderManagement',{orders:orderLists,items: itemsToShow,orderItems:innerArrays,
+        totalPages: totalPages,
+        currentPage: currentPage,})
+  }catch(err){
+      console.error("getOrderList",err.message);
+  }
+  }
+  
+  
+  module.exports.postOrderUpdate=async(req,res)=>{
+      try{
+          console.log("11111111111",req.body);
+        const pipeline = [
+          { $match: { orderId: req.body.orderId } },
+          {$unwind:"$orderItem"},
+          
+        ];
+        
+        const order = await Order.aggregate(pipeline);
+        const orderr= await Order.find({orderId: req.body.orderId })
+        //console.log("hello",orderr[0].orderItems[0].orderStatus);
+        if (orderr.length > 0) {
+          const currentStatus = orderr[0].orderItem[0].orderStatus;
+        
+          let updateStatus;
+          let newStatus;
+        
+          if (currentStatus === "pending") {
+            updateStatus = "processing";
+            newStatus = "processing";
+          } else if (currentStatus === "processing") {
+            updateStatus = "delivered";
+            newStatus = "delivered";
+          }
+        
+          if (updateStatus) {
+            // console.log("inside upda");
+            // await Order.updateOne(
+            //   { orderId: req.body.orderId },
+            //   [{ $set: { orderStatus: updateStatus } }],
+            // );
+            const pipeline=[
+              {$match:{orderId:req.body.orderId}},
+              {$unwind:"$orderItem"},
+              {
+                $addFields:{
+                  "orderItem.updatedField":updateStatus,
+                }
+              },
+              
+            ]
+         
+  
+            const updatedOrder= await Order.findOneAndUpdate(
+              {orderId:req.body.orderId},
+              {$set:{"orderItem.0.orderStatus":updateStatus}}
+            )
+            res.send({ status: updateStatus });
+          } else {
+            res.send({ status: currentStatus });
+          }
+        } else {
+          res.status(404).send({ error: "Order not found" });
+        }
+        
+        
+      }catch(err){
+          console.error("postOrderUpdate",err.message);
+      }
+  }
+  
+  module.exports.getOrderDetails=async(req,res)=>{
+      try{
+        console.log("......................................................",req.query);
+          
+          const order= await Order.findOne({orderId:req.query.id})
+          const pipeline = [
+            {
+              $lookup: {
+                from: 'users', // Replace with your actual collection name for users
+                localField: 'user',
+                foreignField: '_id',
+                as: 'user'
+              }
+            },
+            {
+              $unwind: '$user'
+            },
+            {
+              $unwind: '$orderItem'
+            },
+            {
+              $lookup:{
+                from:'products',
+                localField:'product_id',
+                foreignField:'_id',
+                as:'product'
+              }
+            },
+            {
+              $unwind: '$product'
+            },
+  
+          ];
+          const orderList = await Order.aggregate(pipeline);
+           //console.log("order list  -------------->",order);
+          if (order) {
+        const user = await User.findOne({ _id: order.user });
+       let orderDetails=[]
+       let orders={ address:order.address,
+        name:user.name,
+        orderStatus:order.orderItem[0].orderStatus,
+        totalAmount:order.totalAmount,
+        purchaseDate:order.purchaseDate,
+        deliveryDate:order.deliveryDate,
+        paymentMethod:order.paymentMethod}
+        orderDetails.push(orders)
+      const id =order.orderItem[0].product_id
+        const product = await Products.findOne({ _id:id }); 
+        //console.log("product............",product);
+        if (product) {
+         
+          const orderDetail = {
+  
+            productName: product.productName,
+            quantity: order.orderItem[0].quantity
+  
+        };
+        orderDetails.push(orderDetail);
+            // console.log(`Product Name: ${product.productName}, Quantity: ${orderItem.quantity}`);
+        
+    }
+    console.log("orderDetails.........................@@@@@@@@@@...........................",orderDetails);
+    res.render('orderDetails',{orderDetails})
+  } else {
+      console.log("Order not found");
+  }
+  
+  
+  
+  
+      }catch(err){
+          console.error("postOrderUpdate",err.message);
+      }
+  }
+  
+  module.exports.postCancelOrder = async (req, res) => {
+    try {
+      const orderId = req.body.orderId;
+      const cancelableStatuses = ["pending", "processing"];
+  
+      const order = await Order.findOne({ orderId });
+  
+      if (!order) {
+        return res.send({ message: "Order not found" });
+      }
+  
+      if (!cancelableStatuses.includes(order.orderStatus)) {
+        return res.send({status:"delivered", message: "Cannot cancel order with current status" });
+      }
+  
+      const updatedOrder = await Order.findOneAndUpdate(
+        { orderId },
+        { $set: { orderStatus: "cancel" } },
+        { orderCancleRequest: true } // This ensures that the updated order is returned
+      );
+  
+      res.send({ status: "cancel", message:"Order cancelled" });
+    } catch (err) {
+      console.error(" ------>postCancelOrder<------", err.message);
+      res.status(500).send({ status: "Error occurred while canceling order" });
+    }
+  };
+
+  module.exports.paginate = async (req,res)=>{
+    console.log("req.query>>",req.query.count);
+    if(req.query.count){
+      const countPage = await Order.find(req.body.query).count();
+      const count = ceil(countPage/8);
+      console.log("countPage>>",countPage)
+      res.json(count)
+    }else{
+      const orderdata = await Order.find(req.body.query).sort({createdAt:-1}).limit(req.body.limit).skip(req.body.skip);
+      res.send(orderdata)
+    }
+  }
+  module.exports.getSearch = async(req,res)=>{
+    const searchQuery = new RegExp("^" + req.body.search, "i"); // Adding "i" flag for case-insensitive search
+
+    User.find({ name: { $regex: searchQuery } }).then((users) => {
+      if (users.length === 0) {
+        const itemsPerPage = 6; // Set the desired number of items per page
+            const currentPage = req.query.page ? parseInt(req.query.page) : 1;
+            const totalItems = users.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            // Calculate the startIndex and endIndex to load exactly 'itemsPerPage' items
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            
+            // Slice the array to get items for the current page, ensuring 'itemsPerPage' items
+            const itemsToShow = users.slice(startIndex, endIndex);
+        res.render('usersListAdmin', { users: [],items: itemsToShow,
+          totalPages: totalPages,
+          currentPage: currentPage, });
+      } else {
+        const itemsPerPage = 6; // Set the desired number of items per page
+        const currentPage = req.query.page ? parseInt(req.query.page) : 1;
+        const totalItems = users.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        
+        // Calculate the startIndex and endIndex to load exactly 'itemsPerPage' items
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        
+        // Slice the array to get items for the current page, ensuring 'itemsPerPage' items
+        const itemsToShow = users.slice(startIndex, endIndex);
+    res.render('usersListAdmin', { users,items: itemsToShow,
+      totalPages: totalPages,
+      currentPage: currentPage, });
+      }
+    });
+  
+}
+module.exports.postGraph=async(req,res)=>{
+  try{
+      console.log("***********",req.body);
+  }catch(err){
+      console.error("postGraph====>",err.message);
+  }
+}
+
+module.exports.postConforming=async(req,res)=>{
+try{console.log("................................................................11111111111111111111111111")
+const orderId=req.body.orderId;
+const order=await Order.findOne({orderId:orderId})
+const product=order.forEach(item=>{item.product_id})
+const orderr=await Order.findOneAndUpdate({productId:product},{$set:{orderConfirm:true}})
+console.log(order)
+}catch(e){
+console.log("postConforming order adminside",e.message)
+}
+}
+  module.exports.getLogout = async (req, res) => {
+
+    req.session.admin =""
+    console.log("destroyed")
+    res.redirect('/admin')
+  }

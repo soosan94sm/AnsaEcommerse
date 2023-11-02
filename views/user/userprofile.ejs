@@ -1,0 +1,317 @@
+<%- include('../header')-%>
+    <%- include('./partials/banner')-%>
+
+
+
+        <h1
+            style="text-size-adjust: 100px;color: bisque;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+            ANSA</h1>
+        <!-- <div class="row  " > -->
+        <div>
+            <h1>Your Address</h1>
+            <div class="d-flex">
+
+                <nav class="mobile-nav col-sm-2 border-right pt-2 ">
+                    <ul class="mobile-menu ">
+                        <li class="active">
+                            <a href="/profile/account">Account</a>
+
+
+                        </li>
+                        <li class="active">
+                            <a href="/orders">Order History</a>
+
+                        </li>
+                        <li class="active">
+                            <a href="/profile/address">Address</a>
+
+                        </li>
+                        <li class="active">
+                            <a href="/logout">cashRefund</a>
+
+
+
+                        </li>
+                        <li class="active">
+                            <a href="/wallet">Wallet Details</a>
+                        </li>
+                        <li class="active">
+                            <a href="/invoice">Invoice</a>
+                        </li>
+                        <li class="active">
+                            <a href="/resetpass">Change Password</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <main>
+                    <section class="container">
+                        <div class="row d-flex mb-md-6 ">
+
+
+
+
+                            <div class="container-fluid p-1 bg-white mt-md-4 shadow"
+                                style="border-radius: 10px; box-shadow: 0 0 10px #38b4d0;">
+                                <div class="container row d-flex">
+                                    <!-- personal image add/update section -->
+                                    <div class="col-md-4 p-lg-5 " id="profileImage">
+
+                                      <div class="pt-md-5">
+                                        
+                                        <!-- <form action="/userprofileupdate" method="POST" id="form"
+                                        enctype="multipart/form-data">
+                                        <img id="image1" src=" /admin/assets/uploads/<%= userdata.profileImage %>"
+                                        class="card-img-top align-self-center p-lg-2" alt="image"
+                                        style="height: 150px;width: 150px;">
+                                                <input type="file" name="profileImage" id="profilePictureInput">
+                                                <button type="submit">Upload</button> -->
+                                                <form action="/userprofileupdate" method="post" class="pt-3" id="myForm" enctype="multipart/form-data">
+                                                    <div style="align-items: center;">
+                                                        <div class="col-md-5 ps-5">
+                                                            <img id="image1" src="/admin/assets/uploads/<%= userdata.profileImage %>"
+                                                                class="card-img-top align-self-center p-lg-2" alt="image" style="height: 150px; width: 150px;">
+                                                        </div>
+                                                        <div style="flex: 1;">
+                                                            <input type="file" class="form-control" name="file" id="profileImage" onchange="previewImage()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-outline-primary-2">Update</button>
+                                                    </div>
+                                                </form>
+                                        </div> 
+                                       
+                                         <!-- <div class="pt-lg-2">
+                                          
+                                                <input type="file" name="profileImage" id="profilePictureInput">
+                                                <img id="profilePicturePreview" style="height: 200px;">
+                                                <button class="btn bg-white border-0" type="button" id="cropButton"
+                                                    onclick="upload()">Upload</button>
+
+                                                <button class="btn bg-white border-0" type="button"
+                                                    onclick="cancelImage()">cancel</button>
+                                           
+                                            <div id="up">
+                                                <% if(userdata.profileImage){ %>
+                                                    <form action="/profileupdated" method="POST" id="form"
+                                                    enctype="multipart/form-data" style="display: none;">
+                                                    <input type="file" name="profileImage" id="profilePictureInput">
+                                                </form>
+                                                    <% }else{%>
+                                                        <button class="btn " onclick="uploadImage()"
+                                                            style=" background-color: white; border-color:aqua ;">Add
+                                                            Profile
+                                                            Picture</button>
+                                                        <% }%>
+                                            </div>
+                                        </div>  -->
+                                    </div>
+
+                                    <!-- Personal Details Update Division-->
+                                    <div class="col-md-8 p-lg-5  bg-primary" id="profileDetails">
+                                        <div class="pt-md-2">
+                                            <h6>Personal Details</h6>
+                                            <h6 class="pt-md-5">Name</h6>
+                                            <div class="row d-flex pt-md-1">
+                                                <div class="col-md-5" id="first_name">
+                                                    <input type="text" id="name" name="name" placeholder="Name"
+                                                        value="<%=  userdata.name %>" disabled>
+                                                </div>
+                                                <div class="col-md-1" id="first_name">
+                                                    <button onclick="editName()" style="border: none;"
+                                                        id="editNameButton" class="btn bg-white">edit</button>
+                                                </div>
+                                                <div class="col-md-3" id="update_button" style="display: none;">
+                                                    <button class="btn " onclick="saveName()"> Update</button>
+                                                </div>
+                                                <div class="col-md-3" id="cancel_button" style="display: none;">
+                                                    <button class="btn " onclick="cancel()"> cancel</button>
+                                                </div>
+                                            </div>
+
+
+                                            <h6 class="pt-md-5">Phone Number</h6>
+                                            <div class="row d-flex pt-md-3">
+                                                <div class="col-md-5 " id="editPhone">
+                                                    <input type="text" placeholder="Phone" id="phone"
+                                                        value="<%=  userdata.phone %>" disabled>
+                                                </div>
+                                                <div class="col-md-1" id="editPhone">
+                                                    <button onclick="editPhone()" style="border: none;"
+                                                        id="editPhoneButton" class="btn bg-white">edit</button>
+
+                                                </div>
+                                                <div class="col-md-3" id="update_buttonPhone" style="display: none;">
+                                                    <button class="btn " onclick="savePhone()"> Update</button>
+                                                </div>
+                                                <div class="col-md-3" id="cancel_buttonPhone" style="display: none;">
+                                                    <button class="btn " onclick="cancel()"> cancel</button>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- <div class="container m-md-3 ">
+                                <button class="btn ms-lg-5 mb-lg-5"
+                                    style="border: none;background-color: white; color: #38b4d0;">Deactivate
+                                    Account</button>
+                            </div> -->
+                        </div>
+
+                    </section>
+                </main>
+            </div>
+        </div>
+
+
+        <script>
+
+
+function previewImage() {
+        var input = document.getElementById("profileImage");
+        var img = document.getElementById("image1");
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+            const inputElement = document.getElementById('profilePictureInput');
+            const previewElement = document.getElementById('profilePicturePreview');
+            let croppedImage;
+            let cropper;
+
+            inputElement.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+
+                reader.onload = () => {
+                    const imgSrc = reader.result;
+                    previewElement.src = imgSrc;
+
+                    // Initialize Cropper.js
+                    cropper = new Cropper(previewElement, {
+                        aspectRatio: 1, // Set the desired aspect ratio for cropping
+                        // Additional options can be set here
+                    });
+                };
+
+                reader.readAsDataURL(file);
+            });
+
+            const cropButton = document.getElementById('cropButton');
+            const form = document.getElementById('form');
+            const croppedImageInput = document.getElementById('profilePictureInput');
+            cropButton.addEventListener('click', () => {
+                // Get the cropped canvas data
+                const croppedCanvas = cropper.getCroppedCanvas();
+
+                // Retrieve the cropped image as a data URL
+                croppedImage = croppedCanvas.toDataURL('image/jpeg');
+
+                // You can now use the croppedImage data as needed (e.g., upload to a server, display on the page, etc.)
+                // Set the value of the hidden input field
+                //   croppedImageInput.value = croppedImage;
+
+                // Submit the form
+
+
+            });
+
+            function editName() {
+                document.getElementById('name').removeAttribute('disabled');
+                document.getElementById('editNameButton').style.display = "none";
+                document.getElementById('update_button').style.display = "block";
+                document.getElementById('cancel_button').style.display = "block";
+            }
+
+            function editPhone() {
+                document.getElementById('phone').removeAttribute('disabled');
+                document.getElementById('editPhoneButton').style.display = "none";
+                document.getElementById('update_buttonPhone').style.display = "block";
+                document.getElementById('cancel_buttonPhone').style.display = "block";
+            }
+            function cancel() {
+                location.reload();
+            }
+
+            function saveName() {
+                const name = document.getElementById('name').value;
+                const updateQuery = { $set: { name: name } };
+                fetchData(updateQuery);
+            }
+            function savePhone() {
+                const phone = document.getElementById('phone').value;
+                const updateQuery = { $set: { phone: phone } };
+                fetchData(updateQuery);
+            }
+
+            function fetchData(updateQuery) {
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ updateQuery })
+                }
+                fetch('admin/profile/profileImageUpload', options)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (stock === "blocked") {
+                            window.location.href = '/profileImageUpload'
+                        }
+                        if (data) {
+                            location.reload();
+                        } else {
+                            console.log(data);
+                        }
+                    })
+            }
+
+            function uploadImage() {
+                document.getElementById("up").style.display = "none";
+                document.getElementById("form").style.display = "block";
+            }
+
+            function cancelImage() {
+                location.reload();
+            }
+
+            function uploadImage1() {
+                document.getElementById("up").style.display = "none";
+                document.getElementById("form").style.display = "block";
+            }
+            function upload() {
+                const fileInput = document.getElementById('form');
+                const file = fileInput.file;
+                console.log(file)
+                // Create a new FormData object
+                const formData = new FormData();
+
+                // Append the file to the FormData object with the desired field name
+                formData.append('croppedimage', file);
+                form.submit();
+            }
+
+        </script>
+      
+        <script src="/profile/assets/js/jquery.min.js"></script>
+        <script src="/profile/assets/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="/profile/assets/css/styles.css">
+
+        <%- include('../footer')-%>

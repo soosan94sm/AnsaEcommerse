@@ -1,0 +1,172 @@
+<%- include('../header')-%>
+<%- include('./partials/banner')-%>
+<div class="container mt-10">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="text-center pt-5" id="login">
+                <div class="container border">
+                    <div class="title">
+                        <h2 class="font-weight-bold">Edit Address</h2>
+                    </div>
+                    <form action="/editaddcheck" method="post" onsubmit="validateForm()">
+                        <input hidden type="text" name="id" value="<%= address._id %>">
+                        <% if (locals.message) { %>
+                        <div>
+                            <p class="text-danger"><%= message %></p>
+                        </div>
+                        <% } %>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="name" class="col-md-3 col-form-label text-end">Name</label>
+                                <div class="col-md-6">
+                                    <input type="name" class="form-control" name="name" value="<%= address.name %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="phone" class="col-md-3 col-form-label text-end">Phone</label>
+                                <div class="col-md-6">
+                                    <input type="phone" class="form-control" name="phone" value="<%= address.phone %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="houseNumber" class="col-md-3 col-form-label text-end">House No.</label>
+                                <div class="col-md-6">
+                                    <input type="houseNumber" class="form-control" name="houseNumber" value="<%= address.houseNumber %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="pincode" class="col-md-3 col-form-label text-end">Pincode</label>
+                                <div class="col-md-6">
+                                    <input type="pincode" class="form-control" name="pincode" value="<%= address.pincode %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="address" class="col-md-3 col-form-label text-end">Address</label>
+                                <div class="col-md-6">
+                                    <textarea class="form-control" rows="3" name="address"><%= address.address %></textarea>
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="landmark" class="col-md-3 col-form-label text-end">Landmark</label>
+                                <div class="col-md-6">
+                                    <input type="landmark" class="form-control" name="landmark" value="<%= address.landmark %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="city" class="col-md-3 col-form-label text-end">City</label>
+                                <div class="col-md-6">
+                                    <input type="city" class="form-control" name="city" value="<%= address.city %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="state" class="col-md-3 col-form-label text-end">State</label>
+                                <div class="col-md-6">
+                                    <input type="state" class="form-control" name="state" value="<%= address.state %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            
+                            <div>
+                                <label for="aitPhone ">Alternate Phone nvgvghvgv</label>
+                                <input type="number"name="altPhone" value="<%= address.alternatePhone %>">
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-3">
+                                    <button type="submit" class="btn btnStyle">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function validateForm() {
+        // Get form input elements
+        var name = document.querySelector('input[name="name"]');
+        var phone = document.querySelector('input[name="phone"]');
+        var houseNumber = document.querySelector('input[name="houseNumber"]');
+        var pincode = document.querySelector('input[name="pincode"]');
+        var address = document.querySelector('textarea[name="address"]');
+        var city = document.querySelector('input[name="city"]');
+        var state = document.querySelector('input[name="state"]');
+    
+        // Get error message element
+        var errorMessage = document.querySelector('#error-message');
+    
+        // Initialize a flag to track if there are any validation errors
+        var hasErrors = false;
+    
+        // Define a regular expression for valid phone numbers
+        var phoneRegex = /^\d{10}$/;
+    
+        // Define a regular expression for valid pincode
+        var pincodeRegex = /^\d{6}$/;
+    
+        // Define a regular expression for valid state and city names
+        var nameRegex = /^[a-zA-Z\s]+$/;
+    
+        // Validate Name
+        if (name.value.trim() === "") {
+            errorMessage.innerHTML = "Please enter a valid name.";
+            hasErrors = true;
+        }
+    
+        // Validate Phone
+        if (!phone.value.match(phoneRegex)) {
+            errorMessage.innerHTML = "Please enter a valid 10-digit phone number.";
+            hasErrors = true;
+        }
+    
+        // Validate House Number
+        if (houseNumber.value.trim() === "") {
+            errorMessage.innerHTML = "House number is required.";
+            hasErrors = true;
+        }
+    
+        // Validate Pincode
+        if (!pincode.value.match(pincodeRegex)) {
+            errorMessage.innerHTML = "Please enter a valid 6-digit pincode.";
+            hasErrors = true;
+        }
+    
+        // Validate Address
+        if (address.value.trim() === "") {
+            errorMessage.innerHTML = "Address is required.";
+            hasErrors = true;
+        }
+    
+        // Validate City
+        if (!city.value.match(nameRegex)) {
+            errorMessage.innerHTML = "Please enter a valid city name.";
+            hasErrors = true;
+        }
+    
+        // Validate State
+        if (!state.value.match(nameRegex)) {
+            errorMessage.innerHTML = "Please enter a valid state name.";
+            hasErrors = true;
+        }
+    
+        // Check if there are any validation errors
+        if (hasErrors) {
+            errorMessage.style.display = "block"; // Show the error message
+            return false; // Prevent form submission
+        }
+    
+        // If there are no validation errors, the form will be submitted
+        return true;
+    }
+    </script>
+    
+<%- include('../footer')-%>

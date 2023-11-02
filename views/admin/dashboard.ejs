@@ -1,0 +1,167 @@
+<%- include('./header')-%>
+<%- include('./nav')-%>
+
+
+
+<div class="container text-center mb-3">
+  
+    <div class="row text-center mt-2">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title p-2">Admin Dashboard</h4>
+                    <div class="row">
+                        <% productDetail.forEach(item=>{ %>
+                        <div class="col-md-3 stretch-card grid-margin">
+                            <div class="card bg-gradient-danger shadow">
+                                <div class="card-body">
+                                    <h4 class="mb-3 h5">Total Orders</h4>
+                                    <h2 class="mb-5 h4">
+                                        <%= item.orders  %>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 stretch-card grid-margin">
+                            <div class="card bg-gradient-danger shadow">
+                                <div class="card-body">
+                                    <h4 class="mb-3 h5" style="color: #B88E2F;">Total Sale</h4>
+                                    <h2 class="mb-5 h4">
+                                         <%=item.totalAmount %>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 stretch-card grid-margin">
+                            <div class="card bg-gradient-info card-img-holder shadow">
+                                <div class="card-body">
+                                    <h4 class="font-weight-normal mb-3 h5">Total Users</h4>
+                                    <h2 class="mb-5 h4">
+                                         <%=item.users %>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 stretch-card grid-margin">
+                            <div class="card bg-gradient-success card-img-holder shadow">
+                                <div class="card-body">
+                                    <h4 class="font-weight-normal mb-3 h5">Total Products</h4>
+                                    <h2 class="mb-5 h4">
+                                        <%=item.products %>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!--  #################  end ################# -->
+
+
+    <!--  #################  Sales Section ################# -->
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Order Status</h5>
+              <div class="text-center">
+                <canvas id="stat" width="300" height="300"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Category</h5>
+              <div class="text-center">
+                <canvas id="myChart" width="300" height="300"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script id="status" type="application/json"><%- JSON.stringify(status) %></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+  let statusScript = document.getElementById('status')
+let orderstatuss = JSON.parse(statusScript.textContent)
+console.log("orderstatus",orderstatuss);
+
+const stat = document.getElementById('stat').getContext('2d');
+const chart = new Chart(stat, {
+  type: 'pie',
+  data: {
+    labels: ['Delivered', 'Pending', 'Cancelled'],
+    datasets: [{
+      label: ['Delivered', 'Pending', 'Cancelled'],
+      data: [orderstatuss[0].delivered, orderstatuss[0].pending, orderstatuss[0].cancelled],
+      backgroundColor: [
+        'rgba(33, 145, 4, 0.7)',
+        'rgba(196, 39, 22, 0.7)',
+        'rgba(255, 118, 0, 0.7)',
+      ],
+    }]
+  },
+  options: {
+   
+    aspectRatio: 1, // Set the aspect ratio (1 for a square chart)
+    responsive: true, // Make the chart responsive
+    maintainAspectRatio: false, // Disable aspect ratio constraint
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+        }
+      }]
+    }
+  }
+});
+
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['cottensarees', 'linen woven cotten saree', 'banarasi saree','silk saree','netsarees','colourful sarees'],
+    datasets: [{
+      label: '',
+      data: [orderstatuss[0].delivered, orderstatuss[0].pending, orderstatuss[0].cancelled],
+      backgroundColor: [
+        'rgba(33, 145, 4, 0.8)',
+        'rgba(196, 39, 22, 0.8)',
+        'rgba(255, 118, 0, 0.8)',
+      ],
+    }]
+  },
+  
+  options: {
+    
+    aspectRatio: 1, // Set the aspect ratio (1 for a square chart)
+    responsive: true, // Make the chart responsive
+    maintainAspectRatio: false, // Disable aspect ratio constraint
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true,
+        }
+      }]
+    }
+  }
+});
+    })
+    </script>
+</body>
+</html>

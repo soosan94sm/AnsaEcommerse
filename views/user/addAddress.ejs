@@ -1,0 +1,135 @@
+
+  <%- include('../header')-%>
+<%- include('./partials/banner')-%>
+
+<div class="container mt-5 "style="margin-left:250px">
+    <main class="col-md-6 ms-sm-auto px-md-4 pt-15 ">
+        <h2 class="text-center">Address Management</h2>
+        <form action="" method="post" onsubmit="return validateForm();">
+            <div class="mb-3">
+                <p id="error-message" class="text-danger"></p>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="number" class="form-control" id="phone" name="phone" required>
+            </div>
+            <div class="mb-3">
+                <label for="houseNumber" class="form-label">House No.</label>
+                <input type="number" class="form-control" id="houseNumber" name="houseNumber" required>
+            </div>
+            <div class="mb-3">
+                <label for="pincode" class="form-label">Pincode</label>
+                <input type="number" class="form-control" id="pincode" name="pincode" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea class="form-control" id="address" rows="3" name="address" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="landmark" class="form-label">Landmark</label>
+                <input type="text" class="form-control" id="landmark" name="landmark">
+            </div>
+            <div class="mb-3">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+            <div class="mb-3">
+                <label for="state" class="form-label">State</label>
+                <input type="text" class="form-control" id="state" name="state" required>
+            </div>
+            <div class="mb-3">
+                <label for="altPhone" class="form-label">Alternate Phone</label>
+                <input type="number" class="form-control" id="altPhone" name="altPhone">
+            </div>
+            <div class="mb-3 text-center">
+               
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </main>
+</div>
+<script>
+    function validateForm() {
+        // Get form input elements
+        var name = document.getElementById("name");
+        var phone = document.getElementById("phone");
+        var houseNumber = document.getElementById("houseNumber");
+        var pincode = document.getElementById("pincode");
+        var address = document.getElementById("address");
+        var city = document.getElementById("city");
+        var state = document.getElementById("state");
+    
+        // Get error message element
+        var errorMessage = document.getElementById("error-message");
+    
+        // Define a regular expression for valid phone numbers
+        var phoneRegex = /^\d{10}$/;
+    
+        // Define a regular expression for valid pincode
+        var pincodeRegex = /^\d{6}$/;
+    
+        // Define a regular expression for valid state and city names
+        var nameRegex = /^[a-zA-Z\s]+$/;
+    
+        // Initialize a flag to track if there are any validation errors
+        var hasErrors = false;
+    
+        // Validate Name
+        if (!name.value.match(nameRegex)) {
+            errorMessage.innerHTML = "Please enter a valid name.";
+            hasErrors = true;
+        }
+    
+        // Validate Phone
+        if (!phone.value.match(phoneRegex)) {
+            errorMessage.innerHTML = "Please enter a valid 10-digit phone number.";
+            hasErrors = true;
+        }
+    
+        // Validate House Number
+        if (houseNumber.value === "") {
+            errorMessage.innerHTML = "House number is required.";
+            hasErrors = true;
+        }
+    
+        // Validate Pincode
+        if (!pincode.value.match(pincodeRegex)) {
+            errorMessage.innerHTML = "Please enter a valid 6-digit pincode.";
+            hasErrors = true;
+        }
+    
+        // Validate Address
+        if (address.value === "") {
+            errorMessage.innerHTML = "Address is required.";
+            hasErrors = true;
+        }
+    
+        // Validate City
+        if (!city.value.match(nameRegex)) {
+            errorMessage.innerHTML = "Please enter a valid city name.";
+            hasErrors = true;
+        }
+    
+        // Validate State
+        if (!state.value.match(nameRegex)) {
+            errorMessage.innerHTML = "Please enter a valid state name.";
+            hasErrors = true;
+        }
+    
+        // Check if there are any validation errors
+        if (hasErrors) {
+            errorMessage.style.display = "block"; // Show the error message
+            return false; // Prevent form submission
+        }
+    
+        // If there are no validation errors, the form will be submitted
+        return true;
+    }
+    </script>
+    
+<%- include('../footer')-%>
+ 

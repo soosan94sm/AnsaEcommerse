@@ -1,0 +1,52 @@
+<%- include('../header')-%>
+<%- include('./partials/banner')-%>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Order History</h1>
+
+    <!-- Check if orderItems array is empty -->
+    <% if (orderItems.length === 0) { %>
+        <div class="alert alert-danger text-center">
+            No items
+            <br>
+            <a href="/product" class="btn btn-primary mt-3">Shop Now</a>
+        </div>
+    <% } else { %>
+        <!-- Display order history -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="text-center">Order Placed</th>
+                        <th class="text-center">Total</th>
+                        <th class="text-center">Action</th>
+                        <th class="text-center">Order Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orderItems.forEach(item => { %>
+                        <tr>
+                            <td class="text-center"><%= item.purchaseDate.toLocaleDateString()  %></td>
+                            <td class="text-center">&#8377; <%= item.totalAmount %></td>
+                           
+                            
+                           <td>
+                            <%item.orderItem.forEach(items=>{%>
+                                <%items.product.forEach(images=>{%>
+                                    <p><%=images.productName%></p>
+                                    <img src="/admin/assets/uploads/<%= images.images[0] %>" width="100" alt="IMG-PRODUCT">
+                            <%})%>
+                        <%})%></td>
+                        <td class="text-center">
+                            <a href="/order-details?id=<%= item.orderId %>" class="btn btn-info btn-sm">View Details</a>
+                        </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+</div>
+
+<!-- Include footer -->
+<%- include('../footer')-%>

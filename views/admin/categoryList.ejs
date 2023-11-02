@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/admin/assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="/admin/assets/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="/admin/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="/admin/assets/css/style.css">
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="/admin/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <%- include('./nav')-%>
+
+        <% if(locals.categories) {%>
+            <main class="mainStyle" style="margin-top:20px; margin-right:-250px">
+                <div class="container pt-2">
+                    <section class="container pt-2">
+                        <div class="row ">
+                            <div class="col-md-6 py-4">
+                                <h2><strong class="textColorYellow">CATEGORY LIST </strong></h2>
+                            </div>
+                            <% if (locals.message) { %>
+                                <div class="alert alert-danger">
+                                    <strong>
+                                        <%= message %>
+                                    </strong>
+                                </div>
+                                <% } %>
+                                    <div class=" align-items-center pb-2">
+                                        <form action="/admin/category/search" method="POST" role="search"
+                                            class="d-flex">
+                                            <div class="form-group">
+                                                <input type="text" name="search" id="search" placeholder="Category name"
+                                                    class="search-bar btn-golden-outline">
+                                                <button type="submit"
+                                                    class="btn btn-golden-outline rounded-5 px-3 py-1 ms-2">Search</button>
+                                            </div>
+                                        </form>
+
+                                        <div class="col-md-6 py-4 ps-3">
+                                            <a href="/admin/category/addCategory" class="btn btn-success">Add</a>
+                                        </div>
+                                    </div>
+
+
+                                    <%if(categories.length===0){%>
+                                        <div class="col-md-6">
+                                            <strong class="text-info">No Categories exists </strong>
+                                        </div>
+                                        <% }else{ %>
+
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <table class="table table-bordered table-hover table-striped text-center ml-5 pl-5">
+                                                        <thead style="background-color: #FAF3EA;">
+                                                            <tr>
+                                                                <th>Category Name</th>
+                                                                <th>Image</th>
+
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <% categories.forEach(category=>{ %>
+                                                                <tr>
+
+                                                                    <td>
+                                                                        <%= category.categoryName %>
+                                                                    </td>
+                                                                    <td><img src="/admin/assets/uploads/<%=category.image%>"
+                                                                            alt="" /></td>
+
+                                                                    <td>
+                                                                        <a href="/admin/category/edit?id=<%= category._id %>"
+                                                                            class="btn btn-outline-primary">
+                                                                            Edit
+                                                                        </a>
+
+
+                                                                        <!-- <a href="/admin/category/delete?id=<%= category._id %>&confirm=true"  class="btn btn-danger" onclick="return confirmDelete('<%= category._id %>')">Delete</a> -->
+                                                                        <% if(category.isList){ %>
+                                                                            <a href="/admin/category/isList?id=<%= category._id%>"
+                                                                                class="btn btn-outline-success">
+                                                                                List
+                                                                            </a>
+                                                                            <% }else{ %>
+                                                                                <a href="/admin/category/unList?id=<%= category._id %>"
+                                                                                    class="btn btn-outline-danger">
+                                                                                    unList
+                                                                                </a>
+                                                                                <% } %>
+
+
+
+                                                                    </td>
+
+
+
+                                                                </tr>
+                                                                <% }) %>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- Button trigger modal -->
+
+
+
+                                                </div>
+                                            </div>
+                                            <% } %>
+                        </div>
+                    </section>
+                </div>
+            </main>
+            <% } else{%>
+                <main style="margin-top: 58px">
+                    <div class="container pt-5 textColorYellow ">
+                        <h2>No Categories</h2>
+                    </div>
+                </main>
+                <% } %>
+                    </div>
+                    <script>
+                        function confirmDelete(categoryId) {
+                            const result = confirm("Are you sure you want to delete this  category?");
+                            if (result) {
+                                // The user clicked "OK" (Yes) in the confirmation dialog
+                                // Proceed with the delete action
+                                return true; // This will allow the link to proceed to the delete route
+                            } else {
+                                // The user clicked "Cancel" (No) in the confirmation dialog
+                                // Cancel the delete action
+                                return false; // This will prevent the link from navigating
+                            }
+                        }
+                    </script>
+                    </body>
+
+                    </html>

@@ -1,0 +1,94 @@
+<%- include('../header')-%>
+<%- include('./partials/banner')-%>
+<div class="container mt-10">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="text-center pt-5" id="login">
+                <div class="container border">
+                    <div class="title">
+                        <h2 class="font-weight-bold">Edit Address</h2>
+                    </div>
+                    <form action="/editaddress" method="post" >
+                        <input hidden type="text" name="id" value="<%= address._id %>">
+                        <% if (locals.message) { %>
+                        <div>
+                            <p class="text-danger"><%= message %></p>
+                        </div>
+                        <% } %>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="name" class="col-md-3 col-form-label text-end">Name</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="name" value="<%= address.name %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="phone" class="col-md-3 col-form-label text-end">Phone</label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="phone" value="<%= address.phone %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="houseNumber" class="col-md-3 col-form-label text-end">House No.</label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="houseNumber" value="<%= address.houseNumber %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="pincode" class="col-md-3 col-form-label text-end">Pincode</label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="pincode" value="<%= address.pincode %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="address" class="col-md-3 col-form-label text-end">Address</label>
+                                <div class="col-md-6">
+                                    <textarea class="form-control" rows="3" name="address"><%= address.address %></textarea>
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="landmark" class="col-md-3 col-form-label text-end">Landmark</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="landmark" value="<%= address.landmark %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="city" class="col-md-3 col-form-label text-end">City</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="city" value="<%= address.city %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="state" class="col-md-3 col-form-label text-end">State</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="state" value="<%= address.state %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <label for="altPhone" class="col-md-3 col-form-label text-end">Alternate Phone</label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="altPhone" value="<%= address.alternatePhone %>">
+                                </div>
+                            </div>
+                            <hr class="mx-n3">
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-3">
+                                    <button type="submit" class="btn btnStyle">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../footer')-%>

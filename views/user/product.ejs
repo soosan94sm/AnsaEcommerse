@@ -1,0 +1,72 @@
+
+<%- include('../header')-%>
+
+<%- include('./partials/banner')-%>
+<div class="container pt-5 mt-10">
+	<div class="heading text-center mb-4">
+	<h2 class="title">Popular Saree Collections</h2><!-- End .title -->
+	<p class="title-desc">Amazing Collections.....</p><!-- End .title-desc -->
+	</div><!-- End .heading -->
+
+</div>
+	<div class="col-md-12 pt-5">
+		
+		<div class="container ">
+                
+			<div class="row  ">
+				
+				<%category.forEach(item=>{%>
+				<div class="col-md-12 col-lg-2  ">
+					<div class="banner banner-display banner-link-anim">
+					   
+							<img  style="width: 205px;height: 300px"src="/admin/assets/uploads/<%=item.image%>" alt="<%=item.categoryName%>">
+						
+
+						<div class="banner-content banner-content-center">
+							<h3 class="banner-title text-white"><a href="#"><%=item.categoryName%></a></h3><!-- End .banner-title -->
+							<h4 class="banner-subtitle text-white"><a href="#"></a></h4><!-- End .banner-subtitle -->
+							<a href="/product?id=<%=item._id%>" class="btn btn-outline-white banner-link">Shop Now</a>
+						</div><!-- End .banner-content -->
+					</div><!-- End .banner -->
+				</div><!-- End .col-sm-6 -->
+			<%})%>
+			
+			</div><!-- End .row -->
+			<h2 class="title text-center ">Popular Sarees</h2><!-- End .title -->
+	<div class="row d-flex mt-3" >
+		
+		<%product.forEach((item,i)=>{%>
+		<div class="col-sm-3 product product-4 mt-5 pt-2  " >
+		
+			<figure class="product-media ">
+				<a href="/product-detail?id=<%=item._id%>">
+					
+					 
+					<img style="width: 308px;height: 425px "class="img-fluid "  src="/admin/assets/uploads/<%=item.images[0]%>" alt="<%= product[i].productName%>">
+					
+				</a>
+		
+			
+			</figure><!-- End .product-media -->
+		
+			<div class="product-body">
+				<div class="product-cat">
+					<a href="#"><%= product[i].category%></a>
+				</div><!-- End .product-cat -->
+				<h3 class="product-title text-capitalize"><a href="/product"><%= product[i].productName%></a></h3><!-- End .product-title -->
+				<div class="product-price">
+				  &#8377  <%= product[i].price%>
+				</div><!-- End .product-price -->
+				
+			</div><!-- End .product-body -->
+		</div><!-- End .product -->
+		<%})%>
+		</div>
+		
+		
+		
+
+</div>
+  
+   
+<%- include('../footer')-%>

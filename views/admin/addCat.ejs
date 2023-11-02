@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/admin/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/admin/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/admin/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/admin/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/admin/assets/images/favicon.png" />
+  </head>
+  <body>
+    <div class="container-scroller">
+  <!-- partial:../../partials/_sidebar.html -->
+  <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
+      <a class="sidebar-brand brand-logo" href="#"><img src="admin/assets/images/ansa.png" alt="logo" /></a>
+      <!-- <a class="sidebar-brand brand-logo-mini" href="#"><img src="assets/images/ansa.png" alt="logo" /></a> -->
+    </div>
+    <ul class="nav">
+      <li class="nav-item profile">
+        <div class="profile-desc">
+          <div class="profile-pic">
+            <div class="count-indicator">
+              <img class="img-xs rounded-circle " src="admin/assets/images/faces/face15.jpg" alt="">
+              <span class="count bg-success"></span>
+            </div>
+            <div class="profile-name">
+              <h5 class="mb-0 font-weight-normal">Soosan S M</h5>
+              <span>Gold Member</span>
+            </div>
+          </div>
+          <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+          <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
+            <a href="#" class="dropdown-item preview-item">
+              <div class="preview-thumbnail">
+                <div class="preview-icon bg-dark rounded-circle">
+                  <i class="mdi mdi-settings text-primary"></i>
+                </div>
+              </div>
+              <div class="preview-item-content">
+                <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
+              </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item preview-item">
+              <div class="preview-thumbnail">
+                <div class="preview-icon bg-dark rounded-circle">
+                  <i class="mdi mdi-onepassword  text-info"></i>
+                </div>
+              </div>
+              <div class="preview-item-content">
+                <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
+              </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item preview-item">
+              <div class="preview-thumbnail">
+                <div class="preview-icon bg-dark rounded-circle">
+                  <i class="mdi mdi-calendar-today text-success"></i>
+                </div>
+              </div>
+              <div class="preview-item-content">
+                <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item nav-category">
+        <span class="nav-link">Navigation</span>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="/admin/dashboard">
+          <span class="menu-icon">
+            <i class="mdi mdi-speedometer"></i>
+          </span>
+          <span class="menu-title">Dashboard</span>
+        </a>
+      </li>
+      
+      
+     
+      <!-- <form action="" method="post"> -->
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="/admin/user">
+          <span class="menu-icon">
+            <i class="mdi mdi-table-large"></i>
+          </span>
+          <span class="menu-title">Users</span>
+        </a>
+      </li>
+    <!-- </form> -->
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="/admin/products">
+          <span class="menu-icon">
+            <i class="mdi mdi-chart-bar"></i>
+          </span>
+          <span class="menu-title">Products</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="/admin/category">
+          <span class="menu-icon">
+            <i class="mdi mdi-contacts"></i>
+          </span>
+          <span class="menu-title">Categories</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="/admin">
+          <span class="menu-icon">
+            <i class="mdi mdi-table-large"></i>
+          </span>
+          <span class="menu-title">logout</span>
+        </a>
+      </li>
+        
+      
+    </ul>
+  </nav>
+
+  <section  class="">
+    <div class="container ">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-xl-9">
+  
+          <h1 class="text-white mb-4">Add a category</h1>
+  
+          <div class="card" style="border-radius: 15px;">
+
+            <% if (locals.message) { %>
+                <div class="alert alert-danger">
+                  <strong><%= message %> </strong>
+                </div>
+              <% } %> 
+
+              <form action="" method="post" enctype="multipart/form-data" id="categoryForm">
+                <div class="card-body">
+                    <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+                            <h6 class="mb-0">Category Name</h6>
+                        </div>
+                        <div class="col-md-9 pe-5">
+                            <input type="text" id="categoryName" class="form-control" name="categoryName" placeholder="Enter Category Name" required>
+                            <div id="categoryNameError" class="text-danger"></div>
+                        </div>
+                    </div>
+
+                    <hr class="mx-n3">
+
+                    <div class="row align-items-center py-3">
+                        <div class="col-md-3 ps-5">
+                            <h6 class="mb-0">Category Description</h6>
+                        </div>
+                        <div class="col-md-9 pe-5">
+                            <textarea class="form-control" rows="3" name="description"></textarea>
+                        </div>
+                    </div>
+
+                    <hr class="mx-n3">
+
+                    <div style="display: flex;">
+                        <div class="col-md-3 ps-5" style="flex: 1;">
+                            <h6 class="mb-0">Category Image upload</h6>
+                        </div>
+                        <div style="flex: 1;">
+                            <input type="file" class="form-control" name="file" id="categoryImage">
+                            <img id="image-preview" src="#" alt="Preview" style="display: none; max-width: 100%; max-height: 200px;">
+                            <button id="delete-button" style="display: none;">Delete</button>
+                        </div>
+                    </div>
+
+                    <hr class="mx-n3">
+
+                    <div class="px-5 py-4 text-center">
+                        <button type="submit" class="btn btn-success btn-lg" id="submitButton">Submit</button>
+                    </div>
+                </div>
+            </form>
+          </div>
+  
+        </div>
+      </div>
+  
+  </section>
+  </div>
+  <script>
+    const categoryForm = document.getElementById('categoryForm');
+    const categoryNameInput = document.getElementById('categoryName');
+    const submitButton = document.getElementById('submitButton');
+    const categoryNameError = document.getElementById('categoryNameError');
+
+    categoryForm.addEventListener('submit', function (event) {
+        // Validate category name
+        if (categoryNameInput.value.trim() === '') {
+            categoryNameError.textContent = 'Category Name is required.';
+            event.preventDefault();
+        } else {
+            categoryNameError.textContent = '';
+        }
+    });
+
+    // Optionally, you can add more validation for other fields.
+</script>
+<%- include('footer.ejs') -%>

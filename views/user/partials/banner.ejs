@@ -1,0 +1,104 @@
+
+    <header class="header header-9">
+        <div class="header-middle sticky-header">
+            <div class="container-fluid bg-dark ">
+                <div class="header-left">
+                    <button class="mobile-menu-toggler">
+                        <span class="sr-only">Toggle mobile menu</span>
+                        <i class="icon-bars"></i>
+                    </button>
+                    
+                    <a href="/" class="logo">
+                        <h1 style="text-size-adjust: 100px;color: bisque;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">ANSA</h1>
+                    </a>
+                </div><!-- End .header-left -->
+
+                <div class="header-right">
+                    <nav class="main-nav">
+                        <ul class="menu sf-arrows">
+                            <li >
+                                <a href="/" >Home</a>
+
+                            </li>
+                            
+                            <li>
+                                <a href="/product" >Shop</a>
+
+                            </li>
+                          
+                           
+                       
+                             <!-- <li>
+                                <a href="/contact" >Contact</a>
+
+                                <ul>
+                                    <li><a href="blog.html">Classic</a></li> -->
+                                    
+                                            
+                                    <li >
+                                        <a href="/profile">Profile</a>
+                
+                                       
+                                    </li>      
+                                            
+                                       
+                                  
+                                     
+                            
+                        </ul><!-- End .menu -->
+                    </nav><!-- End .main-nav -->
+                </div><!-- End .header-right -->
+                    <div class="header-search">
+                        <a href="" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                        <form action="/search" method="post">
+                           
+                           <!-- <button style="width: 10px;">search</button> -->
+                            <div class="header-search-wrapper">
+                                <button  class="sr-only">Search</button>
+                                <input type="search" class="form-control" name="search" id="search" placeholder="Search in..." required>
+                            </div><!-- End .header-search-wrapper -->
+                            
+                        </form>
+                        
+                    </div><!-- End .header-search -->
+                    
+                    <!-- <a href="wishlist" class="wishlist-link">
+                        <i class="icon-heart-o"></i>
+                        <span class="wishlist-count">3</span>
+                    </a> -->
+
+                    <div class="dropdown cart-dropdown">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <i class="icon-shopping-cart"></i>
+                            
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            
+
+                            
+                            <div class="dropdown-cart-action">
+                                <a href="/cart" class="btn btn-primary">View Cart</a>
+                                <a href="/checkout" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                            </div><!-- End .dropdown-cart-total -->
+                        </div><!-- End .dropdown-menu -->
+                    </div><!-- End .cart-dropdown -->
+                    <div> 
+                       
+                        <% if(locals.user){ %>
+                          
+                          
+                            <a class="text-white ml-3 font-weight-bold" href="/logout">Logout</a>
+                       
+                     <%}else{%>
+
+                        <a class="text-white ml-3 font-weight-bold" href="/login">Login</a>
+
+<%}%>                          
+                           
+                     
+                        </div>   
+               
+         </div><!-- End .container -->
+        </div><!-- End .header-middle -->
+    </header><!-- End .header -->

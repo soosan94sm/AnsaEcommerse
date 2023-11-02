@@ -1,0 +1,257 @@
+<%- include('../header')-%>
+
+<%- include('./partials/banner')-%>
+
+            <div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url('assets/images/backgrounds/login-bg.jpg')">
+            	<div class="container">
+            		<div class="form-box">
+            			<div class="form-tab">
+	            			<ul class="nav nav-pills nav-fill" role="tablist">
+							    <li class="nav-item">
+							        <a class="nav-link" id="signin-tab-2" data-toggle="tab" href="#signin-2" role="tab" aria-controls="signin-2" aria-selected="false">SignUp</a>
+							    </li>
+							   
+							</ul>
+							<div class="tab-content">
+							    <div class="tab-pane fade" id="signin-2" role="tabpanel" aria-labelledby="signin-tab-2">
+							    	
+							    	<div class="form-choice">
+								    	<p class="text-center">or sign in with</p>
+								    	<div class="row">
+								    		<div class="col-sm-6">
+								    			<a href="#" class="btn btn-login btn-g">
+								    				<i class="icon-google"></i>
+								    				Login With Google
+								    			</a>
+								    		</div><!-- End .col-6 -->
+								    		<div class="col-sm-6">
+								    			<a href="#" class="btn btn-login btn-f">
+								    				<i class="icon-facebook-f"></i>
+								    				Login With Facebook
+								    			</a>
+								    		</div><!-- End .col-6 -->
+								    	</div><!-- End .row -->
+							    	</div><!-- End .form-choice -->
+							    </div><!-- .End .tab-pane -->
+							    <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
+							    	<form action="" method="post" class="pt-3" id="'myForm"enctype="multipart/form-data">
+                                        <% if(locals.message) { %>
+                                        <div>
+                                          <p class="text-danger"><%= message %> </p>
+                                        </div>
+                                        <% } %>
+										<div style="align-items: center;">
+											<div class="col-md-5 ps-5" >
+												<h6 class="mb-0">Profile Image</h6>
+											</div>
+											<div style="flex: 1;">
+												<input type="file" class="form-control" name="file" id="profileImage" onchange="previewImage()">
+												<img id="image-preview" src="" alt="Preview" style="display: none;width: 100px;height: 100px;border-radius: 100%;">
+											</div>
+										</div>
+                                        <div class="form-group">
+                                          <input type="username" class="form-control" placeholder="Username" name="name" required><br> 
+                                        </div>
+                                       
+                                        
+                                       
+                                        <div class="form-group">
+                                          <input type="email" id="email-error" class="form-control" placeholder="Email" name="email" required><br>
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="phone" id="phone-error" class="form-control" placeholder="Phone" name="phone" required><br>
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="password" id="password-error" class="form-control" name="password" placeholder="Password"  required><br>
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="password" id="confirm-password" class="form-control" onfocusout="confirmPassword()" name="confirmpassword" placeholder="Confirm Password" required><br>
+                                        </div>
+                                        
+                                          <div class="form-group">
+                                            
+                                            <button class="btn btn-outline-primary-2">Sign Up</button>
+										</div>
+                                            <a href="/login">Already have an account?Login here</a>
+                                           
+                                        
+                                          
+                                            
+                                           
+                                     
+                                      </form>
+							    
+							    </div><!-- .End .tab-pane -->
+							</div><!-- End .tab-content -->
+						</div><!-- End .form-tab -->
+            		</div><!-- End .form-box -->
+            	</div><!-- End .container -->
+            </div><!-- End .login-page section-bg -->
+        </main><!-- End .main -->
+
+        <footer class="footer">
+        	<div class="footer-middle">
+	            <div class="container">
+	            	<div class="row">
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget widget-about">
+	            				<h3>Ansa</h3>
+	            				<div class="social-icons">
+	            					<a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+	            					<a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
+	            				</div><!-- End .soial-icons -->
+	            			</div><!-- End .widget about-widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">About Ansa</a></li>
+	            					<li><a href="#">How to shop on Ansa</a></li>
+	            					<li><a href="#">FAQ</a></li>
+	            					<li><a href="#">Contact us</a></li>
+	            					<li><a href="#">Log in</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">Payment Methods</a></li>
+	            					<li><a href="#">Money-back guarantee!</a></li>
+	            					<li><a href="#">Returns</a></li>
+	            					<li><a href="#">Shipping</a></li>
+	            					<li><a href="#">Terms and conditions</a></li>
+	            					<li><a href="#">Privacy Policy</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="#">Sign In</a></li>
+	            					<li><a href="cart.ejs">View Cart</a></li>
+	            					<li><a href="#">My Wishlist</a></li>
+	            					<li><a href="#">Track My Order</a></li>
+	            					<li><a href="#">Help</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+	            	</div><!-- End .row -->
+	            </div><!-- End .container -->
+	        </div><!-- End .footer-middle -->
+
+	        <div class="footer-bottom">
+	        	<div class="container">
+	        		<p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+	        		<figure class="footer-payments">
+	        			<img src="assets/images/payments.png" alt="Payment methods" width="272" height="20">
+	        		</figure><!-- End .footer-payments -->
+	        	</div><!-- End .container -->
+	        </div><!-- End .footer-bottom -->
+        </footer><!-- End .footer -->
+    </div><!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+            <form action="#" method="get" class="mobile-search">
+                <label for="mobile-search" class="sr-only">Search</label>
+                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
+                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+            </form>
+            
+			<script>
+				var form = document.getElementById('myForm');
+				var validationMessages = document.getElementById('validationMessages');
+			
+				form.addEventListener('submit', function (event) {
+					validationMessages.innerHTML = ''; // Clear previous validation messages
+			
+					var nameField = form.elements['name'];
+					var emailField = form.elements['email'];
+					var phoneField = form.elements['phone'];
+					var passwordField = form.elements['password'];
+					var confirmPasswordField = form.elements['confirmpassword'];
+			
+					if (nameField.value.trim() === '') {
+						//displayValidationMessage('Please enter a username.');
+						alert("userName")
+						event.preventDefault();
+					}
+			
+					if (emailField.value.trim() === '') {
+						displayValidationMessage('Please enter an email address.');
+						event.preventDefault();
+					}
+			
+					if (!validatePhoneNumber(phoneField.value)) {
+						displayValidationMessage('Please enter a valid phone number.');
+						event.preventDefault();
+					}
+			
+					if (passwordField.value.length < 8) {
+						displayValidationMessage('Password must be at least 8 characters long.');
+						event.preventDefault();
+					}
+			
+					if (passwordField.value !== confirmPasswordField.value) {
+						displayValidationMessage('Passwords do not match.');
+						event.preventDefault();
+					}
+				});
+			
+				function displayValidationMessage(message) {
+					var messageElement = document.createElement('p');
+					messageElement.textContent = message;
+					messageElement.classList.add('text-danger');
+					validationMessages.appendChild(messageElement);
+				}
+			
+				function validatePhoneNumber(phone) {
+    // Define a regular expression pattern for a 10-digit phone number that starts with "98"
+    var phonePattern = /^98\d{8}$/;
+
+    // Test if the phone number matches the pattern
+    return phonePattern.test(phone);
+}
+
+			</script>
+			<script>
+				function previewImage() {
+					const fileInput = document.getElementById('profileImage');
+					const imagePreview = document.getElementById('image-preview');
+					const file = fileInput.files[0];
+			
+					if (file) {
+						const reader = new FileReader();
+			
+						reader.onload = function (e) {
+							imagePreview.src = e.target.result;
+							imagePreview.style.display = 'block';
+						};
+			
+						reader.readAsDataURL(file);
+					} else {
+						imagePreview.src = '';
+						imagePreview.style.display = 'none';
+					}
+				}
+			</script>
+    <%- include('../footer')-%>   

@@ -1,0 +1,51 @@
+<%- include('../header')-%>
+
+<%- include('./partials/banner')-%>
+
+<h1 class="pt-5 ">Generate Invoice</h1>
+    <form id="invoice-form " method="post">
+        <label for="orderId"><%=order.orderId%></label>
+        <input type="text" id="orderId" name="orderId" required><br>
+        <button type="submit">Generate Invoice</button>
+    </form>
+
+    <div id="invoice-result">
+        <!-- Invoice details will be displayed here -->
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('invoice-form');
+        const invoiceResult = document.getElementById('invoice-result');
+    
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+    
+            const orderId = document.getElementById('orderId').value;
+    
+            // Send a POST request to the back end to generate the invoice
+            fetch('/invoice', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ orderId }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Format the invoice data for display
+                const formattedInvoice = `
+                    <h2>Invoice Details</h2>
+                    <p>Order ID: ${data.orderId}</p>
+                    <p>Invoice Amount: $${data.invoiceAmount.toFixed(2)}</p>
+                    <p>Delivery Date: ${new Date(data.deliveryDate).toDateString()}</p>
+                `;
+    
+                // Update the "invoice-result" div with the formatted data
+                invoiceResult.innerHTML = formattedInvoice;
+            })
+            .catch(error => console.error(error));
+        });
+    });
+</script>
+
+<%- include('../footer')-%>

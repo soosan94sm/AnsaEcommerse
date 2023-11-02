@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/admin/assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="/admin/assets/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="/admin/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="/admin/assets/css/style.css">
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="/admin/assets/images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <%- include('./nav')-%>
+<section class=" gradient-custom pt-5">
+    <div class="container">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5 mb-3">
+          <div class="card  text-white g-white shadow" style="border-radius: 1rem">
+            <div class="card-body text-center ">
+              <div class=" mt-md-4 pb-md-2  b">
+                <h2 class="fw-bold mb-2 text-uppercase text-black pb-3">
+                  Add Coupon 
+                </h2>
+               
+                  
+                  <form class="p-md-2" action=" " method="post">
+                    <input class="form-control form-control-lg text-black-50" type="text" name="coupon_name" placeholder="Coupon Name"
+                      id="couponName"  />
+                    <span id="Name"></span><br />
+
+                    <div class="input-group ">
+                      <input class="form-control form-control-lg text-black-50 no-arrows" type="number" name="offer" placeholder="Offer %"
+                        id="couponOffer"  />
+                      <span class="input-group-text" id="basic-addon1">%</span>
+                    </div>
+                    
+                    <div>
+                      <p class="text-danger" id="price"></p>
+                    </div>
+                    <input class="form-control form-control-lg text-black-50 no-arrows" type="number" name="min_value" placeholder="Min Value" min="1" oninput="validatePrice(this)"
+                      id="min_Value"  />
+                    <span id="Number"></span><br />
+                    <input class="form-control form-control-lg text-black-50 no-arrows" type="number" name="max_value" placeholder="Max Value"
+                      id="maxValue" >
+                    <span id="Password"></span><br />
+                    <input class="form-control form-control-lg text-black-50" type="date" name="expiry_date" placeholder="Expiry Date"
+                      id="expiryDate"  />
+                    <input class="btn btn-primary mt-md-4" type="submit" value="Add Coupon"
+                      style="background-color: green;" />
+                  </form>
+
+                  <% if(typeof message !=='undefined' ) { %>
+                    <p style="color: red">
+                      <%= message %>
+                    </p>
+                    <% } %>
+
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<script>
+  const err = document.getElementById('price')
+  // const err = document.getElementById('price')
+  function validatePrice(input){
+        const inputValue = input.value.trim();
+        console.log( inputValue < 100);
+        if(inputValue < 1){
+          err.innerHTML = "Price should be a number and above 1";        
+        }else{
+        err.innerHTML=""
+      }
+      }
+</script>
+</body>
+</html>

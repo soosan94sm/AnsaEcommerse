@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/admin/assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/admin/assets/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="/admin/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="/admin/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/admin/assets/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/admin/assets/images/favicon.png" />
+    <link rel="stylesheet" href="https://unpkg.com/cropperjs@1.5.12/dist/cropper.css">
+<script src="https://unpkg.com/cropperjs@1.5.12/dist/cropper.js"></script>
+
+  </head>
+  <body>
+    <section>
+        <div class="container">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-xl-9">
+                    <h1 class="text-white mb-4 text-center">Add a product</h1>
+                    <div class="card" style="border-radius: 15px;">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <% if(locals.message){ %>
+                                <div>
+                                    <p class="text-danger" id="err"><%= message %></p>
+                                </div>
+                            <% } %>
+                            <div class="card-body">
+                                <div class="row align-items-center py-3">
+                                    <div class="col-md-3 ps-5">
+                                        <h6 class="mb-0">Product Name</h6>
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+                                        <input type="text" class="form-control form-control-lg" name="productName" />
+                                    </div>
+                                </div>
+                                <hr class="mx-n3">
+                                <div class="row align-items-center py-3">
+                                    <div class="col-md-3 ps-5">
+                                        <h6 class="mb-0">Product Price</h6>
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+                                        <div>
+                                            <p class="text-danger" id="price"></p>
+                                        </div>
+                                        <input type="number" class="form-control form-control-lg" min="100" name="price" oninput="validatePrice(this)" />
+                                    </div>
+                                </div>
+                                <hr class="mx-n3">
+                                <div class="row align-items-center py-3">
+                                    <div class="col-md-3 ps-5">
+                                        <p class="text-danger" id="stock"></p>
+                                        <h6 class="mb-0">Product Stock</h6>
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+                                        <input type="number" class="form-control form-control-lg" name="stock" min="1" />
+                                    </div>
+                                </div>
+                                <hr class="mx-n3">
+                                <div class="row align-items-center py-3" style="display: flex;">
+                                    <div class="col-md-3 ps-5" style="flex: 1;">
+                                        <h6 class="mb-0">Product Category</h6>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <select name="category" class="form-select mr-5" aria-label="Default select example">
+                                            <option selected>Select the category</option>
+                                            <% category.forEach(function(cat) { %>
+                                                <option value="<%= cat.categoryName %>"><%= cat.categoryName %></option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr class="mx-n3">
+                                <div class="row align-items-center py-3">
+                                    <div class="col-md-3 ps-5">
+                                        <h6 class="mb-0">Product Details</h6>
+                                    </div>
+                                    <div class="col-md-9 pe-5">
+                                        <textarea class="form-control" rows="4" name="description"></textarea>
+                                    </div>
+                                </div>
+                                <hr class="mx-n3">
+                                <div style="display: flex;">
+                                    <div class="col-md-3 ps-5" style="flex: 1;">
+                                        <h6 class="mb-0">Product Image upload</h6>
+                                    </div>
+                                    <form action="/upload" method="post" enctype="multipart/form-data" id="productForm">
+                                      <!-- Your existing form fields -->
+                                      
+                                      <div style="flex: 1;">
+                                          <div>
+                                              <p class="text-danger" id="img"></p>
+                                          </div>
+                                          <input class="form-control" name="images" multiple type="file" id="formFileMultiple" multiple
+                                              oninput="initializeCropper(this)" accept="image/*" />
+                                          <button type="button" class="btn btn-outline-primary btn-lg" onclick="submitForm()">Enter</button>
+                                          <div class="cropper-container">
+                                            <img id="image" src="#" alt="Preview" style="max-width: 100%; max-height: 200px;">
+                                          </div>
+                                      </div>
+                                  </form>
+                                  
+                                </div>
+                                <hr class="mx-n3">
+                                <div class="px-5 py-4 text-center">
+                                    
+                                    <button type="submit" class="btn btn-outline-success btn-lg">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+    function submitForm() {
+    // Create a FormData object to include form data
+    const formData = new FormData(document.querySelector('form'));
+
+    // Send the form data using the Fetch API
+    fetch("/upload", {
+        method: "POST",
+        body: formData,
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        // Handle the response (e.g., display success message)
+        console.log(data);
+    })
+    .catch((error) => {
+        // Handle errors
+        console.error(error);
+    });
+}
+
+</script>
+  
+    <script>
+        const err = document.getElementById('price');
+        const img = document.getElementById('img');
+    
+        function validatePrice(input) {
+            const inputValue = input.value.trim();
+            if (isNaN(inputValue) || inputValue < 100) {
+                err.innerHTML = "Price should be a number and above 100";
+            } else {
+                err.innerHTML = "";
+            }
+        }
+    
+        function initializeCropper(input) {
+    const inputFile = input.files;
+    const cropperContainer = document.querySelector('.cropper-container');
+
+    if (inputFile.length >= 1) {
+        if (inputFile.length > 3) {
+            input.value = null;
+            img.innerHTML = "Please select a maximum of 3 images.";
+            return;
+        }
+
+        for (let i = 0; i < inputFile.length; i++) {
+            const file = inputFile[i];
+            const reader = new FileReader();
+            const image = new Image();
+
+            reader.onload = function (e) {
+                image.src = e.target.result;
+                image.className = 'cropper-hidden';
+
+                if (i === 0) {
+                    cropperContainer.innerHTML = '';
+                }
+
+                cropperContainer.appendChild(image);
+
+                image.onload = function () {
+                    const cropper = new Cropper(image, {
+                        aspectRatio: 1,
+                        viewMode: 1,
+                        autoCropArea: 0.8,
+                        ready: function () {
+                            const croppedDataUrl = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+                            
+                            // Set the cropped image data in the hidden field
+                            const croppedImageField = document.getElementById(`croppedImage${i + 1}`);
+                            if (croppedImageField) {
+                                croppedImageField.value = croppedDataUrl;
+                            }
+                        },
+                    });
+                };
+            };
+
+            reader.readAsDataURL(file);
+        }
+    } else {
+        input.value = null;
+        img.innerHTML = "Please select at least one image.";
+    }
+}
+
+
+
+    
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get a reference to the form and form fields
+            const form = document.querySelector("form");
+    
+            form.addEventListener("submit", function (event) {
+                let isValid = true;
+                const productName = document.querySelector('input[name="productName"]');
+                const price = document.querySelector('input[name="price"]');
+                const stock = document.querySelector('input[name="stock"]');
+                const category = document.querySelector('select[name="category"]');
+                const description = document.querySelector('textarea[name="description"]');
+                const file = document.querySelector('input[name="images]')
+    
+                if (productName.value.trim() === "") {
+                    isValid = false;
+                    err.innerHTML = "Product Name is required.";
+                }
+    
+                if (price.value.trim() === "" || isNaN(price.value) || price.value < 100) {
+                    isValid = false;
+                    err.innerHTML = "Product Price should be a number and above 100.";
+                }
+    
+                if (stock.value.trim() === "" || isNaN(stock.value)) {
+                    isValid = false;
+                    err.innerHTML = "Product Stock should be a valid number.";
+                }
+    
+                if (category.value === "Select the category") {
+                    isValid = false;
+                    err.innerHTML = "Please select a Product Category.";
+                }
+    
+                if (description.value.trim() === "") {
+                    isValid = false;
+                    err.innerHTML = "Product Details are required.";
+                }
+    
+                if (file.files.length === 0) {
+                    isValid = false;
+                    img.innerHTML = "Please select at least one Product Image.";
+                }
+    
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+    </body>
+  </html>
