@@ -38,7 +38,7 @@ user_route.get('/otpValidation', userController.getOtp)
  user_route.get('/profile',userAuth.isBlocked ,userController.getProfilenav)
 user_route.get('/profile/account',userAuth.isBlocked,userAuth.isBlocked,userController.getUserProfile)
  user_route.post('/profile/account',userAuth.isBlocked,userController.postUserProfile)
- //user_route.post('/profileImageUpload ',upload.single("file"),userController.getProfileImageUpload )
+
  user_route.post("/userprofileupdate",upload.single("file"),userController.postProfileImageUpload)
  
 //product and category
@@ -50,16 +50,15 @@ user_route.get('/product-detail',userAuth.isBlocked,userController.getProductDet
 
  
  user_route.get('/dashboard',userController.getdashboard)
-  //user_route.get('/contact',userController.getContact)
-
+ 
   
  user_route.get('/cart',userAuth.isBlocked,userController.getCart)
  user_route.post('/api/add-to-cart',userAuth.isBlocked,userController.postAddToCart)
- // user_route.get('/cart/cartDelete',userController.getCartDelete)
+
   user_route.get('/cartDelete',userAuth.isBlocked,userController.getCartDelete)
 
   
-//  //user_route.get('/wishlist',userController.getwishlist)
+
 user_route.get('/forgotpassword',userController.getForgot)
 
   user_route.post('/forgotpassword',userController.postForgot)
@@ -106,26 +105,24 @@ user_route.get('/orders',orderController.getOrders)
 
 user_route.get("/order-details",orderController.getOrderDetails)
 //product cancel
-user_route.post('/product-cancel',orderController.productCancel)
-user_route.post("/product-return",orderController.productreturn)
+user_route.get('/product-cancel',orderController.productCancel)
+user_route.get("/product-return",orderController.getproductreturn)
+user_route.get("/product-returnOne",orderController.productreturn)
 //order cancel page
-user_route.get('/cancel',orderController.getProductCancel)
+/
 user_route.post('/search',userController.postSearch)
 user_route.get('/filter-cat',filterCatController.getFilterCat)
 // filter cat using ajax
 user_route.post('/filter-cat',filterCatController.postFiltercat)
-//user_route.post('/wallet-order',userController.postWallet)
 
 // wallet
 user_route.get('/wallet',walletController.getWallet)
 user_route.post('/wallet',walletController.postWallet)
 // coupon update
-//user_route.post('/couponUpdate',(req,res)=>{res.send("hiii")})
+
 user_route.post('/couponUpdate',userController.postCouponUpdate)
 user_route.get('/404',userController.geterror)
 user_route.post('/invoice',userController.postInvoice)
 user_route.get('/invoice',userController.getInvoice)
-//user_route.get("/change-password",userController.getchangep)
-//user_route.post("/change-password",userController.postchangep)
 
 module.exports=user_route;

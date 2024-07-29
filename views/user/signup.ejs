@@ -34,26 +34,26 @@
 							    	</div><!-- End .form-choice -->
 							    </div><!-- .End .tab-pane -->
 							    <div class="tab-pane fade show active" id="register-2" role="tabpanel" aria-labelledby="register-tab-2">
-							    	<form action="" method="post" class="pt-3" id="'myForm"enctype="multipart/form-data">
+									<form action="" method="post" class="pt-3" id="myForm" onsubmit="return validateForm()" enctype="multipart/form-data">
+							    	
                                         <% if(locals.message) { %>
                                         <div>
                                           <p class="text-danger"><%= message %> </p>
                                         </div>
                                         <% } %>
 										<div style="align-items: center;">
-											<div class="col-md-5 ps-5" >
-												<h6 class="mb-0">Profile Image</h6>
+											<div class="col-md-5 ps-5">
+											  <h6 class="mb-0">Profile Image</h6>
 											</div>
 											<div style="flex: 1;">
-												<input type="file" class="form-control" name="file" id="profileImage" onchange="previewImage()">
-												<img id="image-preview" src="" alt="Preview" style="display: none;width: 100px;height: 100px;border-radius: 100%;">
+											  <input type="file" class="form-control" name="file" id="profileImage" onchange="validateImage()">
+											  <img id="image-preview" src="" alt="Preview" style="display: none; width: 100px; height: 100px; border-radius: 100%;">
 											</div>
-										</div>
+										  </div>
                                         <div class="form-group">
-                                          <input type="username" class="form-control" placeholder="Username" name="name" required><br> 
-                                        </div>
+											<input type="name"  class="form-control" placeholder="Name" name="name" required><br>
+										  </div>
                                        
-                                        
                                        
                                         <div class="form-group">
                                           <input type="email" id="email-error" class="form-control" placeholder="Email" name="email" required><br>
@@ -176,46 +176,54 @@
                 <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
                 <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
             </form>
-            
+            <script src="path/to/jquery.elevatezoom.js"></script>
+
 			<script>
-				var form = document.getElementById('myForm');
-				var validationMessages = document.getElementById('validationMessages');
+				function validateForm() {
+					var nameField = document.getElementById('name').value.trim();
+					var emailField = document.getElementById('email-error').value.trim();
+					var phoneField = document.getElementById('phone-error').value.trim();
+					var passwordField = document.getElementById('password-error').value;
+					var confirmPasswordField = document.getElementById('confirm-password').value;
+					var profileImageField = document.getElementById('profileImage');
 			
-				form.addEventListener('submit', function (event) {
-					validationMessages.innerHTML = ''; // Clear previous validation messages
+					// Clear previous validation messages
+					var validationMessages = document.getElementById('validationMessages');
+					validationMessages.innerHTML = '';
 			
-					var nameField = form.elements['name'];
-					var emailField = form.elements['email'];
-					var phoneField = form.elements['phone'];
-					var passwordField = form.elements['password'];
-					var confirmPasswordField = form.elements['confirmpassword'];
-			
-					if (nameField.value.trim() === '') {
-						//displayValidationMessage('Please enter a username.');
-						alert("userName")
-						event.preventDefault();
+					if (nameField === '') {
+						displayValidationMessage('Please enter a name.');
+						return false;
 					}
 			
-					if (emailField.value.trim() === '') {
+					if (emailField === '') {
 						displayValidationMessage('Please enter an email address.');
-						event.preventDefault();
+						return false;
+					} else if (!validateEmail(emailField)) {
+						displayValidationMessage('Please enter a valid email address.');
+						return false;
 					}
 			
-					if (!validatePhoneNumber(phoneField.value)) {
+					if (phoneField === '' || !validatePhoneNumber(phoneField)) {
 						displayValidationMessage('Please enter a valid phone number.');
-						event.preventDefault();
+						return false;
 					}
 			
-					if (passwordField.value.length < 8) {
+					if (passwordField.length < 8) {
 						displayValidationMessage('Password must be at least 8 characters long.');
-						event.preventDefault();
+						return false;
 					}
 			
-					if (passwordField.value !== confirmPasswordField.value) {
+					if (passwordField !== confirmPasswordField) {
 						displayValidationMessage('Passwords do not match.');
-						event.preventDefault();
+						return false;
 					}
-				});
+			
+					// Additional validation for the profile image if needed
+			
+					// If all validations pass, the form is considered valid
+					return true;
+				}
 			
 				function displayValidationMessage(message) {
 					var messageElement = document.createElement('p');
@@ -224,15 +232,45 @@
 					validationMessages.appendChild(messageElement);
 				}
 			
+				function validateEmail(email) {
+					var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+					return emailPattern.test(email);
+				}
+			
 				function validatePhoneNumber(phone) {
-    // Define a regular expression pattern for a 10-digit phone number that starts with "98"
-    var phonePattern = /^98\d{8}$/;
+					var phonePattern = /^(\+?\d{1,4}[\s-]?)?\(?(\d{1,4})\)?[\s-]?\d{1,9}$/;
+					return phonePattern.test(phone);
+				}
+			
+				function previewImage() {
+					// Your existing code for previewing the image goes here
+				}
+				function validateImage() {
+      var input = document.getElementById('profileImage');
+      var preview = document.getElementById('image-preview');
+      var file = input.files[0];
 
-    // Test if the phone number matches the pattern
-    return phonePattern.test(phone);
-}
+      // Check if a file is selected
+      if (file) {
+        // Get the file extension
+        var ext = file.name.split('.').pop().toLowerCase();
 
+        // Check if the file is a JPG
+        if (ext === 'jpg' || ext === 'jpeg') {
+          // Show the preview image
+          preview.src = URL.createObjectURL(file);
+          preview.style.display = 'block';
+        } else {
+          // Reset the input and display an error message
+          input.value = '';
+          alert('Please select a JPG file.');
+        }
+      }
+    }
+  
 			</script>
+			
+			
 			<script>
 				function previewImage() {
 					const fileInput = document.getElementById('profileImage');

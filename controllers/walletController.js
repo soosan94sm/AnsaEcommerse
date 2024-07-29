@@ -56,14 +56,7 @@ module.exports.postWallet= async(req,res)=>{
      const product = await Products.findOne({_id: orderItem.product_id });
      
  console.log("productts======",product);
-     // If the product is found, decrement the stock_quantity
-    //  if (product) {
-    //    product.stock -= orderItem.quantity;
-    //      price = orderItem.price
-
-    //    // Save the updated product back to the database
-    //    await product.save();
-    //  }
+     
    } catch (error) {
      console.error('Error updating product stock:', error);
    }

@@ -9,7 +9,7 @@
                         <h2 class="font-weight-bold">Edit Address</h2>
                     </div>
                     <form action="/editaddcheck" method="post" onsubmit="validateForm()">
-                        <input hidden type="text" name="id" value="<%= address._id %>">
+                        <input hidden type="text" name="id" value="<%= address._id % >"required>
                         <% if (locals.message) { %>
                         <div>
                             <p class="text-danger"><%= message %></p>
@@ -19,28 +19,28 @@
                             <div class="form-group row">
                                 <label for="name" class="col-md-3 col-form-label text-end">Name</label>
                                 <div class="col-md-6">
-                                    <input type="name" class="form-control" name="name" value="<%= address.name %>">
+                                    <input type="name" class="form-control" name="name" value="<%= address.name %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="phone" class="col-md-3 col-form-label text-end">Phone</label>
                                 <div class="col-md-6">
-                                    <input type="phone" class="form-control" name="phone" value="<%= address.phone %>">
+                                    <input type="phone" class="form-control" name="phone" value="<%= address.phone %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="houseNumber" class="col-md-3 col-form-label text-end">House No.</label>
                                 <div class="col-md-6">
-                                    <input type="houseNumber" class="form-control" name="houseNumber" value="<%= address.houseNumber %>">
+                                    <input type="houseNumber" class="form-control" name="houseNumber" value="<%= address.houseNumber %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="pincode" class="col-md-3 col-form-label text-end">Pincode</label>
                                 <div class="col-md-6">
-                                    <input type="pincode" class="form-control" name="pincode" value="<%= address.pincode %>">
+                                    <input type="pincode" class="form-control" name="pincode" value="<%= address.pincode %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
@@ -54,28 +54,28 @@
                             <div class="form-group row">
                                 <label for="landmark" class="col-md-3 col-form-label text-end">Landmark</label>
                                 <div class="col-md-6">
-                                    <input type="landmark" class="form-control" name="landmark" value="<%= address.landmark %>">
+                                    <input type="landmark" class="form-control" name="landmark" value="<%= address.landmark %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="city" class="col-md-3 col-form-label text-end">City</label>
                                 <div class="col-md-6">
-                                    <input type="city" class="form-control" name="city" value="<%= address.city %>">
+                                    <input type="city" class="form-control" name="city" value="<%= address.city %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="state" class="col-md-3 col-form-label text-end">State</label>
                                 <div class="col-md-6">
-                                    <input type="state" class="form-control" name="state" value="<%= address.state %>">
+                                    <input type="state" class="form-control" name="state" value="<%= address.state %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             
                             <div>
-                                <label for="aitPhone ">Alternate Phone nvgvghvgv</label>
-                                <input type="number"name="altPhone" value="<%= address.alternatePhone %>">
+                                <label for="aitPhone ">Alternate Phone </label>
+                                <input type="number"name="altPhone" value="<%= address.alternatePhone %>"required>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
@@ -90,6 +90,7 @@
         </div>
     </div>
 </div>
+
 <script>
     function validateForm() {
         // Get form input elements

@@ -46,9 +46,13 @@
         </select>
     </div>
 
-    <div class="mt-4 text-center">
-        <button class="btn btn-danger" id="cancel" data-orderItemId="<%=orderItemId  %>" data-orderId="<%=orderId %>" data-productId="<%=productId %>" data-quantity="<%=quantity%>" >Cancel this delivery</button>
-        <button class="btn btn-secondary" id="returnToOrderHistory">Return to order history</button>
+    <div class="text-center">
+        <!-- <button class="btn btn-danger" id="cancel" data-orderItemId="<%=orderItemId  %>" data-orderId="<%=orderId %>" data-productId="<%=productId %>" data-quantity="<%=quantity%>" >Cancel this delivery</button> -->
+        <!-- <button class="btn btn-secondary" id="returnToOrderHistory" data-orderItemId="<%=orderItemId  %>" data-orderId="<%=orderId %>" data-productId="<%=productId %>" data-quantity="<%=quantity%>" onclick="returnItem(this)">Return to order history</button> -->
+        <!-- <a href="/product-returnOne?id=<%=productId%>&orderId=<%=orderId%>"class="btn btn-secondary" id="returnToOrderHistory">Return to order history</a>
+       -->
+       <a href="/product-cancel?id=<%=productId %>&orderId=<%=orderItemId  %>"
+        class="btn btn-secondary" id="returnToOrderHistory">Cancel</a>
     </div>
     </div>
     
@@ -86,40 +90,51 @@
     
     });
     
-    document.addEventListener('DOMContentLoaded', function () {
+    // function returnItem(){
+    //     const returnReason = document.getElementById('cancellationReason').value;
+    //     console.log("returnReason",returnReason)
+    //     const orderId = this.getAttribute('data-orderId');
+    //         const orderItemId = this.getAttribute('data-orderItemId');
+            
+    //         const productId = this.getAttribute('data-productId');
+    //         const quantity = this.getAttribute('data-quantity');
+    //         console.log("Reason",orderId,orderItemId,productId,quantity);
+    // }
+    // document.addEventListener('DOMContentLoaded', function () {
         
-        const returnButton = document.getElementById('returnToOrderHistory');
+    //     const returnButton = document.getElementById('returnToOrderHistory');
 
-        
+    //     const returnReason = document.getElementById('cancellationReason').value;
 
-        returnButton.addEventListener('click', function () {
-            // Handle the return logic using Fetch
-            const orderId = this.getAttribute('data-orderId');
-            const orderItemId = this.getAttribute('data-orderItemId');
-            const returnReason = document.getElementById('cancellationReason').value;
-            const productId = this.getAttribute('data-productId');
-            const quantity = this.getAttribute('data-quantity');
 
-            fetch('/product-return', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ orderId, orderItemId, returnReason, productId, quantity })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Returned product:', data);
-                if (data.success) {
-                    // Handle successful return (e.g., display a success message)
-                    // You can hide the cancellation section and display a success message here
-                }
-            })
-            .catch(error => {
-                console.error('Error during product return:', error);
-            });
-        });
-    });
+    //     returnButton.addEventListener('click', function () {
+    //         // Handle the return logic using Fetch
+    //         const orderId = this.getAttribute('data-orderId');
+    //         const orderItemId = this.getAttribute('data-orderItemId');
+    //         const returnReason = document.getElementById('cancellationReason').value;
+    //         const productId = this.getAttribute('data-productId');
+    //         const quantity = this.getAttribute('data-quantity');
+
+    //         fetch('/product-return', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({ orderId, orderItemId, returnReason, productId, quantity })
+    //         })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log('Returned product:', data);
+    //             if (data.success) {
+    //                 // Handle successful return (e.g., display a success message)
+    //                 // You can hide the cancellation section and display a success message here
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.error('Error during product return:', error);
+    //         });
+    //     });
+    // });
   
  
 </script>

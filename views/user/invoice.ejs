@@ -2,48 +2,56 @@
 
 <%- include('./partials/banner')-%>
 
-<h1 class="pt-5 ">Generate Invoice</h1>
-    <form id="invoice-form " method="post">
-        <label for="orderId"><%=order.orderId%></label>
-        <input type="text" id="orderId" name="orderId" required><br>
-        <button type="submit">Generate Invoice</button>
-    </form>
-
-    <div id="invoice-result">
-        <!-- Invoice details will be displayed here -->
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-4">Generate Invoice</h1>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="form-group">
+                <label for="orderId">Order ID:</label>
+                <input type="text" class="form-control" id="orderId" name="orderId" required>
+            </div>
+            <button id="generate-button" class="btn btn-primary btn-block mt-3">Generate Invoice</button>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <div id="invoice-result" class="text-center">
+                <!-- Invoice details will be displayed here -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('invoice-form');
+        const generateButton = document.getElementById('generate-button');
         const invoiceResult = document.getElementById('invoice-result');
-    
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-    
+
+        generateButton.addEventListener("click", async function (e) {
             const orderId = document.getElementById('orderId').value;
-    
-            // Send a POST request to the back end to generate the invoice
-            fetch('/invoice', {
+            const response = await fetch('/invoice', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ orderId }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Format the invoice data for display
-                const formattedInvoice = `
-                    <h2>Invoice Details</h2>
-                    <p>Order ID: ${data.orderId}</p>
-                    <p>Invoice Amount: $${data.invoiceAmount.toFixed(2)}</p>
-                    <p>Delivery Date: ${new Date(data.deliveryDate).toDateString()}</p>
-                `;
-    
-                // Update the "invoice-result" div with the formatted data
-                invoiceResult.innerHTML = formattedInvoice;
-            })
-            .catch(error => console.error(error));
+            });
+
+            const data = await response.json();
+            console.log(data);
+
+            const formattedInvoice = `
+                <h2>Invoice Details</h2>
+                <p>Order ID: ${data.orderId}</p>
+                <p>Invoice Amount: $${data.invoiceAmount.toFixed(2)}</p>
+                <p>Delivery Date: ${new Date(data.deliveryDate).toDateString()}</p>
+            `;
+
+            invoiceResult.innerHTML = formattedInvoice;
         });
     });
 </script>

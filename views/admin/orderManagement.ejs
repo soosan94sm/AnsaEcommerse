@@ -15,12 +15,12 @@
 
   <div class="d-flex">
       <!-- Commented out the search form for now, you can uncomment it as needed -->
-      <!--
-      <form action="/admin/order/search" method="get" class="d-flex ms-2 me-2" role="search">
+      
+      <!-- <form action="/admin/order/search" method="get" class="d-flex ms-2 me-2" role="search">
           <input class="form-control me-2" type="text" placeholder="Search Order" id="search" name="search">
           <button class="btn btn-outline-primary" type="submit" value="Search">Search</button>
-      </form>
-      -->
+      </form> -->
+     
   </div>
 
   <div class="row align-items-end col-lg-10 col-xl-10 m-lr-auto m-b-50 mr-0 mt-2">
@@ -67,12 +67,12 @@
               <% items.forEach(item => { %>
                   <% item.orderItem.forEach(orderItem => { %>
                       <tr class="word-wrap">
-                          <td class="word-wrap orderId"><%= item.orderId %></td>
+                          <td class="word-wrap orderId"style="color: aliceblue;"><%= item.orderId %></td>
                           <td class="text-capitalize username"><a href="/admin/order/admindetails?id=<%= item.orderId %>"><%= orderItem.product_id %></a> </td>
                          
                          
-                          <td ><%= item.paymentMethod %></td>
-                          <td><%= item.purchaseDate.toLocaleDateString() %></td>
+                          <td style="color: aliceblue;" ><%= item.paymentMethod %></td>
+                          <td style="color: aliceblue;"><%= item.purchaseDate.toLocaleDateString() %></td>
                           <td>
                             <div class="col-md-6">
                               <button style="color: aliceblue;" data-orderid="<%= item.orderId %>" data-productid="<%= orderItem.product_id._id %>" id="btnUpdate" class="btn btn-outline-dark update" style="margin-left: 5px;"><%=orderItem.orderStatus %></button>
@@ -166,6 +166,14 @@ document.querySelectorAll('.update').forEach(button => {
       btnUpdate.innerHTML=response.status
       alert("delivered")
 
+    }else if( response.status==="cancel"){
+      
+      
+      btnUpdate.innerHTML=response.status
+      alert("cancel")
+    }else{
+      btnUpdate.innerHTML=response.status
+      alert("return") 
     }
 
     // Update progress bar
@@ -266,24 +274,7 @@ document.getElementById("applyFilters").addEventListener('click',()=>{
       newRow += '<td>' + item.orderId + '</td>';
       newRow +='<td>'+'<a class="text-capitalize" href=`/admin/order/admindetails?id=${item.orderId }`>'+ orderItem.product_id+'</a> '+ '</td>';
       
-      newRow += '<td><div class="progress">';
-        
-        if (orderItem.orderStatus === 'pending') {
-          newRow += '<div class="progress-bar bg-warning" data-orderid="' + item.orderId + '" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>';
-        } else if (orderItem.orderStatus === 'processing') {
-          newRow += '<div class="progress-bar bg-primary" data-orderid="' + item.orderId + '" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>';
-        } else if (orderItem.orderStatus === 'delivered') {
-          newRow += '<div class="progress-bar bg-success" data-orderid="' + item.orderId + '" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>';
-        } else if (orderItem.orderStatus === 'cancel') {
-          newRow += '<div class="progress-bar bg-danger" data-orderid="' + item.orderId + '" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>';
-        } else {
-          newRow += '<div class="progress-bar" role="progressbar" data-orderid="' + item.orderId + '" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>';
-        }
-
-        newRow += '</div></td>';
-
-
-
+   
         
         newRow += '<td >' + item.paymentMethod  + '</td>';
 

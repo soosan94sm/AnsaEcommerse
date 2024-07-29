@@ -43,7 +43,7 @@ product_route.get('/edit',productController.getEditProduct)
 product_route.post('/edit',upload.array('images'),productController.postEditProduct)
 
 // delete product
-//product_route.get('/delete',productController.getProductDelete)
+
 product_route.get("/isList", productController.getisList);
 
 product_route.get("/unList",productController.getUnList);

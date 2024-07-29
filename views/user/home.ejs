@@ -46,7 +46,7 @@
 
                         <a href="/" class="logo">
                             <h1
-                                style="text-size-adjust: 100px;color: bisque;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+                                style="text-size-adjust: 100px;color: rgb(14, 13, 12);font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
                                 ANSA</h1>
                         </a>
                     </div><!-- End .header-left -->
@@ -144,7 +144,7 @@
                 <div class="carousel-inner">
                     <% banner.forEach((item, index) => { %>
                         <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                            <img class="d-block w-100" src="/admin/assets/uploads/<%= item.image %>" alt="<%= item.alt %>">
+                            <img class="d-block w-100 " src="/admin/assets/uploads/<%= item.image %>" alt="<%= item.alt %>">
                         </div>
                     <% }) %>
                 </div>

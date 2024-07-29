@@ -4,20 +4,7 @@ const User = require("../models/userModels");
 
 module.exports.getCoupons = async(req,res)=>{
      try{
-        // const formate=req.body;
         
-        // const couponDetails = {
-        //     couponName: formate.couponName, // Assuming you're passing this value through a POST request
-        //     couponValue: formate.couponValue,
-        //     expiryDate: formate.expiryDate,
-        //     maxValue: formate.maxValue,
-        //     minValue:formate.minValue,
-        //     isList: true,
-        //   };
-      
-        //   // Create the coupon
-        //   const coupon = await Coupon.create(couponDetails);
-      
         
         const coupon= await Coupon.aggregate([
             {

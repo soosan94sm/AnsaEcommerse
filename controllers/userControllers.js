@@ -105,40 +105,36 @@ module.exports.getSignup = async (req, res) => {
 
 module.exports.postSignup = async (req, res) => {
   const { name, email, password, phone, confirmpassword } = req.body
-  console.log(req.file.filename)
-  try {
-    const { name, email, password, phone, confirmpassword } = req.body
-    //console.log(req.body)
-    let existing = await User.find({ $or: [{ email: email }, { phone: phone }] })
+  //console.log(req.file.filename)
+  try{
+    const {name,email,password,phone,confirmpassword}=req.body
+    let existing = await User.find({$or:[{email:email},{phone:phone}]})
 
-
-    if (existing.length === 0) {
-
-
-    } else {
-      res.render('signup', { message: "User already exists" })
-    }
-    if (confirmpassword !== password) {
-      res.render('signup', { message: "Password do not match" })
-    } else if (!phone.match(/^[6789]\d{9}$/)) {
-      res.render('signup', { message: "Invalid mobile number" })
-    } else if(name.trim()==""){
-  res.render('signup',{message:"Invalid user name"})
-    }else{
-      const bcryptPass = await securePassword(password)
-      const createUser = await User.insertMany([{
-        name: name,
-        email: email,
-        password: bcryptPass,
-        phone: Number(phone),
-        profileImage:req.file.filename
-      }])
   
-      //console.log(createUser);
-      res.redirect('/login')
-    }
+    if(existing.length === 0){
+        if(confirmpassword !== password){
+            res.render('signup',{message:"Password do not match"})
+        }else if(!phone.match(/^[6789]\d{9}$/)){
+            res.render('signup',{message:"Invalid mobile number"})
+        }else{
+            const bcryptPass = await securePassword(password)
+            User.insertMany([{
+                name:name,
+                email:email,
+                password:bcryptPass,
+                phone:phone,
+                profileImage:req.file.filename
+            }])
+            console.log(".......................req.body",req.body)
+            console.log("user created successfully");
 
-  } catch (e) {
+            res.render('otpLogin')
+        }
+    
+}else{
+    res.render('signup',{message:"User already exists"})
+}
+}catch (e) {
     console.log("postsignup", e.message);
   }
 
@@ -292,7 +288,22 @@ module.exports.getProduct = async (req, res) => {
       categoryy.map(async (item) => {
          product = await Products.find({ category: item.categoryName, isList: true })
         console.log("000000000000000000000", product)
-        res.render('categorypro', { product: product ,user})
+
+        const itemsPerPage = 6;
+        const totalItems = product.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+    
+        const currentPage = req.query.page ? parseInt(req.query.page) : 1;
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const itemsToShow = product.slice(startIndex, endIndex);
+    
+       
+    
+      
+
+        res.render('categorypro', { product: product ,user,totalPages: totalPages,
+          currentPage: currentPage,})
       })
 
     }
@@ -302,19 +313,24 @@ module.exports.getProduct = async (req, res) => {
       console.log("category.............", category)
        product = await Products.find({})
       console.log("product............", product)
-      res.render("product", { product: product, category: category ,user})
+
+
+      const itemsPerPage = 6;
+      const totalItems = product.length;
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+      const currentPage = req.query.page ? parseInt(req.query.page) : 1;
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = startIndex + itemsPerPage;
+      const itemsToShow = product.slice(startIndex, endIndex);
+  
+
+      res.render("product", { product: product, category: category ,user,totalPages: totalPages,
+        currentPage: currentPage,})
     }
 
   
-  const itemsPerPage = 30;
-        const totalItems = product.length;
-        console.log("product.length---->",product.length)
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-    
-        const currentPage = req.query.page ? parseInt(req.query.page) : 1;
-        const startIndex = (currentPage - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const itemsToShow = product.slice(startIndex, endIndex);
+  
   }
    catch (err) {
     console.error(err);
@@ -450,7 +466,11 @@ module.exports.getCart = async (req, res) => {
       const user = await User.findOne({ email: req.session.userId })
       const product = await Products.findOne({ _id: item.productId });
       if (product) {
+
         let total = item.quantity * product.price;
+        console.log(item.quantity,"---")
+        console.log(product.price,"---+++")
+        console.log(total)
         cartData.push({ user: user, count: item.quantity, product: product, total: total });
       }
 
@@ -807,15 +827,7 @@ module.exports.postCouponUpdate = async (req, res) => {
     const user = await User.findOne({ email: req.session.userId })
     console.log(user._id);
 
-    // const coupon = await Coupon.findOneAndUpdate(
-    //     { _id: couponId },
-    //     {
-    //       $push: { userId: user._id }
-    //     },
-    //     { new: true } // To return the updated document
-    //   );
-
-    //   console.log("Updated Coupon:", coupon);
+    
 
     return res.status(200).json({ success: true, couponId });
 
@@ -830,6 +842,7 @@ module.exports.getInvoice = async (req, res) => {
   try {
     const order = await Order.find({ orderStatus: 'delivered' });
 
+    console.log("redering from invoice");
     res.render("invoice", { order: order })
   } catch (e) {
     console.log(e.message)
@@ -844,7 +857,7 @@ module.exports.postInvoice = async (req, res) => {
     const order = await Order.findOne({ orderId });
 
     if (!order) {
-      return res.status(404).json({ message: 'Order not found' });
+      return res.status(400).json({ message: 'Order not found' });
     }
 
     if (order.deliveryDate === null) {
@@ -866,6 +879,7 @@ module.exports.postInvoice = async (req, res) => {
       deliveryDate: order.deliveryDate,
     };
 
+    console.log("responsing from invoice post");
     return res.json(invoice);
   } catch (err) {
     console.log(err.message)

@@ -8,7 +8,7 @@
                     <div class="title">
                         <h2 class="font-weight-bold">Edit Address</h2>
                     </div>
-                    <form action="/editaddress" method="post" >
+                    <form action="/editaddress" method="post" onsubmit="return validateForm();" name="editAddressForm">
                         <input hidden type="text" name="id" value="<%= address._id %>">
                         <% if (locals.message) { %>
                         <div>
@@ -19,28 +19,28 @@
                             <div class="form-group row">
                                 <label for="name" class="col-md-3 col-form-label text-end">Name</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="name" value="<%= address.name %>">
+                                    <input type="text" class="form-control" name="name" value="<%= address.name %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="phone" class="col-md-3 col-form-label text-end">Phone</label>
                                 <div class="col-md-6">
-                                    <input type="number" class="form-control" name="phone" value="<%= address.phone %>">
+                                    <input type="number" class="form-control" name="phone" value="<%= address.phone %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="houseNumber" class="col-md-3 col-form-label text-end">House No.</label>
                                 <div class="col-md-6">
-                                    <input type="number" class="form-control" name="houseNumber" value="<%= address.houseNumber %>">
+                                    <input type="number" class="form-control" name="houseNumber" value="<%= address.houseNumber %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="pincode" class="col-md-3 col-form-label text-end">Pincode</label>
                                 <div class="col-md-6">
-                                    <input type="number" class="form-control" name="pincode" value="<%= address.pincode %>">
+                                    <input type="number" class="form-control" name="pincode" value="<%= address.pincode %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
@@ -54,28 +54,28 @@
                             <div class="form-group row">
                                 <label for="landmark" class="col-md-3 col-form-label text-end">Landmark</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="landmark" value="<%= address.landmark %>">
+                                    <input type="text" class="form-control" name="landmark" value="<%= address.landmark %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="city" class="col-md-3 col-form-label text-end">City</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="city" value="<%= address.city %>">
+                                    <input type="text" class="form-control" name="city" value="<%= address.city %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="state" class="col-md-3 col-form-label text-end">State</label>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control" name="state" value="<%= address.state %>">
+                                    <input type="text" class="form-control" name="state" value="<%= address.state %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
                             <div class="form-group row">
                                 <label for="altPhone" class="col-md-3 col-form-label text-end">Alternate Phone</label>
                                 <div class="col-md-6">
-                                    <input type="number" class="form-control" name="altPhone" value="<%= address.alternatePhone %>">
+                                    <input type="number" class="form-control" name="altPhone" value="<%= address.alternatePhone %>"required>
                                 </div>
                             </div>
                             <hr class="mx-n3">
@@ -91,4 +91,46 @@
         </div>
     </div>
 </div>
+<script>
+    // Function to validate the form
+    function validateForm() {
+        var name = document.forms["editAddressForm"]["name"].value;
+        var phone = document.forms["editAddressForm"]["phone"].value;
+        var houseNumber = document.forms["editAddressForm"]["houseNumber"].value;
+        var pincode = document.forms["editAddressForm"]["pincode"].value;
+        var address = document.forms["editAddressForm"]["address"].value;
+        var city = document.forms["editAddressForm"]["city"].value;
+        var state = document.forms["editAddressForm"]["state"].value;
+
+        if (name === "") {
+            alert("Name must be filled out");
+            return false;
+        }
+        if (phone === "") {
+            alert("Phone must be filled out");
+            return false;
+        }
+        if (houseNumber === "") {
+            alert("House Number must be filled out");
+            return false;
+        }
+        if (pincode === "") {
+            alert("Pincode must be filled out");
+            return false;
+        }
+        if (address === "") {
+            alert("Address must be filled out");
+            return false;
+        }
+        if (city === "") {
+            alert("City must be filled out");
+            return false;
+        }
+        if (state === "") {
+            alert("State must be filled out");
+            return false;
+        }
+    }
+</script>
+
 <%- include('../footer')-%>

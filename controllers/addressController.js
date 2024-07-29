@@ -152,7 +152,7 @@ try{
     if (user) {
         // Use the filter method to create a new array without the object that matches the id
         user.address.items = user.address.items.filter((item) => item.id !== id);
-      
+      console.log("---deleteaddressis :",user.address.items)
         // Save the updated user with the modified address array
         await user.save();
 

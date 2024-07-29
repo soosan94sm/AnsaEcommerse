@@ -3,8 +3,6 @@ const Products = require('../models/productModel')
 const fs = require('fs');
 
 
-
-
 module.exports.getCategoryList=async(req,res)=>{
     try{
 console.log(req.session.admin)

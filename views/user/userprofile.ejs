@@ -8,10 +8,10 @@
             ANSA</h1>
         <!-- <div class="row  " > -->
         <div>
-            <h1>Your Address</h1>
+    
             <div class="d-flex">
 
-                <nav class="mobile-nav col-sm-2 border-right pt-2 ">
+                <nav class="mobile-nav col-sm-2 border-right pt-2 mt-5 ">
                     <ul class="mobile-menu ">
                         <li class="active">
                             <a href="/profile/account">Account</a>
@@ -72,9 +72,15 @@
                                                             <img id="image1" src="/admin/assets/uploads/<%= userdata.profileImage %>"
                                                                 class="card-img-top align-self-center p-lg-2" alt="image" style="height: 150px; width: 150px;">
                                                         </div>
-                                                        <div style="flex: 1;">
-                                                            <input type="file" class="form-control" name="file" id="profileImage" onchange="previewImage()">
-                                                        </div>
+                                                        <div style="align-items: center;">
+                                                            <div class="col-md-5 ps-5">
+                                                              <h6 class="mb-0">Profile Image</h6>
+                                                            </div>
+                                                            <div style="flex: 1;">
+                                                              <input type="file" class="form-control" name="file" id="profileImage" onchange="validateImage()">
+                                                              <img id="image-preview" src="" alt="Preview" style="display: none; width: 100px; height: 100px; border-radius: 100%;">
+                                                            </div>
+                                                          </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <button class="btn btn-outline-primary-2">Update</button>
@@ -307,7 +313,29 @@ function previewImage() {
                 formData.append('croppedimage', file);
                 form.submit();
             }
+            function validateImage() {
+      var input = document.getElementById('profileImage');
+      var preview = document.getElementById('image-preview');
+      var file = input.files[0];
 
+      // Check if a file is selected
+      if (file) {
+        // Get the file extension
+        var ext = file.name.split('.').pop().toLowerCase();
+
+        // Check if the file is a JPG
+        if (ext === 'jpg' || ext === 'jpeg') {
+          // Show the preview image
+          preview.src = URL.createObjectURL(file);
+          preview.style.display = 'block';
+        } else {
+          // Reset the input and display an error message
+          input.value = '';
+          alert('Please select a JPG file.');
+        }
+      }
+    }
+  
         </script>
       
         <script src="/profile/assets/js/jquery.min.js"></script>

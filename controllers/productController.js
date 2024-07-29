@@ -11,11 +11,24 @@ module.exports.getProductList=async(req,res)=>{
     
     try{
 
-        const pdt =await Products.find({})
+        const pdt =await Products.find({isList:true})
        console.log(pdt);
-        if(pdt){
-            res.render('productList',{products:pdt})
-        }
+
+       const itemsPerPage = 12;
+    const totalItems = pdt.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    const currentPage = req.query.page ? parseInt(req.query.page) : 1;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const itemsToShow = pdt.slice(startIndex, endIndex);
+
+   
+
+    res.render('productList',{products:pdt,totalPages: totalPages,
+      currentPage: currentPage, });
+
+      
     }catch(err){
         console.error(err);
     }
@@ -72,37 +85,7 @@ console.log("...........................................",category)
 
 
 
-// module.exports.postAddProduct = async (req, res) => {
-//     try {
 
-      
-//         const existing = await Products.findOne({ productName: req.body.productName });
-//         console.log(req.body,"--->body");
-//         console.log(req.files,"--->images");
-//         if (existing) {
-//             res.render('addProduct', { message: "Product already exists" });
-//         } else {
-//             const arrImages = [];
-//             for (let i = 0; i < req.files.length; i++) {
-//                 arrImages[i] = req.files[i].filename;
-//             }console.log(req.body.category)
-//             const product = await Products.insertMany([{
-              
-//                 productName: req.body.productName,
-//                 price: req.body.price,
-//                 stock: req.body.stock,
-//                 description: req.body.description,
-//                 // discount: req.body.discount,
-//                 category: req.body.category,
-//                 images: arrImages,
-//             }]);
-           
-//             return res.redirect('/admin/products');
-//         }
-//     } catch (err) {
-//         console.error(err.message);
-//     }
-// };
 module.exports.postupload=async(req, res) => {
   const cat=await Category.find({})
   res.render('addProduct',{category:cat});
@@ -186,26 +169,7 @@ module.exports.postEditProduct=async(req,res)=>{
         console.error(err);
     }
 }
-// module.exports.getProductDelete = async (req, res) => {
-//     try {
-//       const id = req.query.id;
-      
-//       // Check if the category should be deleted based on client-side confirmation
-//       const shouldDelete = req.query.confirm === 'true'; // Check the query parameter
-  
-//       if (shouldDelete) {
-//         // Perform the deletion only if confirmed
-//         await Products.updateOne({ _id: id }, { $set: { isList: false } });
-//       }
-      
-//       res.redirect('/admin/products');
-//     } catch (err) {
-//       console.error(err);
-//       // Handle errors appropriately (e.g., send an error response or render an error page)
-//       res.status(500).send('Internal Server Error');
-//     }
-//   };
-  
+
   module.exports.getisList= async (req, res) => {
     try {
        const userId = req.query.id;

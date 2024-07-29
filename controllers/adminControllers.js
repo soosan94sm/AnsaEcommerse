@@ -1,5 +1,4 @@
-const nodemailer = require('nodemailer');
-//const crypto = require('crypto');
+
 const bcrypt = require('bcrypt');
 const Admin = require('../models/adminModel');
 const User = require('../models/userModels');
@@ -125,31 +124,13 @@ module.exports.postLogin = async(req,res)=>{
 
         }];
 
-//         // Use a for...of loop to allow asynchronous operations inside
-//         for (const orderItem of orders) {
-//             for (const item of orderItem.orderItems) {
-//                 const product = await Products.findOne({ _id: item.product });
-        
-//                 if (product) {
-//                     const orderDetail = {
-//                         productName: product.productName,
-//                         quantity: item.quantity,
-//                         price: product.price,
-//                         images: product.images,
-//                     };
-//                     productDetail.push(orderDetail);
-//                 }
-//             }
-//         }
+
 const orderData=await Order.find({})
 console.log(orderData)
  console.log(productDetail);
         res.render('dashboard',{productDetail,allOrderes,status,orderData})
     }  
 
-    // //   module.exports.adminCreateUser = (req, res) => {
-    // //     res.render("adminCreateUser")
-    // //   }
     
   
     module.exports.getAdminLDashbaordUsers=async(req,res)=>{
@@ -257,11 +238,15 @@ console.log(orderData)
     
         const itemsPerPage = 6;
         const totalItems = orderLists.length;
+        console.log("totalItems------------>",totalItems)
         const totalPages = Math.ceil(totalItems / itemsPerPage);
-    
+    console.log("totalPages----->",totalPages)
         const currentPage = req.query.page ? parseInt(req.query.page) : 1;
+        console.log("currentPage",currentPage)
         const startIndex = (currentPage - 1) * itemsPerPage;
+        console.log(" startIndex--->", startIndex)
         const endIndex = startIndex + itemsPerPage;
+        console.log("endIndex--->",endIndex)
         const itemsToShow = orderLists.slice(startIndex, endIndex);
     
         const innerArrays = itemsToShow.map(item => item.orderItem);
@@ -303,14 +288,15 @@ console.log(orderData)
             } else if (currentStatus === "processing") {
               updateStatus = "delivered";
               newStatus = "delivered";
+            
+              
+            }else{
+              updateStatus="cancel"
+              newStatus="cancel"
             }
           
             if (updateStatus) {
-              // console.log("inside upda");
-              // await Order.updateOne(
-              //   { orderId: req.body.orderId },
-              //   [{ $set: { orderStatus: updateStatus } }],
-              // );
+              
               const pipeline=[
                 {$match:{orderId:req.body.orderId}},
                 {$unwind:"$orderItem"},
@@ -327,6 +313,7 @@ console.log(orderData)
                 {orderId:req.body.orderId},
                 {$set:{"orderItem.0.orderStatus":updateStatus}}
               )
+              console.log(" updatedOrder---->", updatedOrder)
               res.send({ status: updateStatus });
             } else {
               res.send({ status: currentStatus });
